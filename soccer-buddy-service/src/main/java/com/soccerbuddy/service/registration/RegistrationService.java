@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.soccerbuddy.dal.model.UserProfile;
 
 @RestController
 class RegistrationService {

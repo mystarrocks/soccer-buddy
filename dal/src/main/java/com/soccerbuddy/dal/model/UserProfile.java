@@ -1,4 +1,4 @@
-package com.soccerbuddy.service.registration;
+package com.soccerbuddy.dal.model;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
