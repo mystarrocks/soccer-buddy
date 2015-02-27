@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.soccerbuddy.dal.dao.UserProfileDao;
 import com.soccerbuddy.dal.model.UserProfile;
 
 @RestController
@@ -26,12 +27,14 @@ class RegistrationService {
     MongoClient m = new MongoClient(uri);
     Morphia morphia = new Morphia();
     morphia.map(UserProfile.class);
-        Datastore ds = new Morphia().createDatastore(m, "soccer-buddy");
+    Datastore ds = morphia.createDatastore(m, "soccer-buddy");
+ 
         UserProfile us = new UserProfile();
         us.setEmail(registeringUser.getEmailId());
         us.setPassword(registeringUser.getPassword());
         us.setName(registeringUser.getUsername());
-        ds.save(us);    
+        UserProfileDao userDao = new UserProfileDao(UserProfile.class, ds);    
+        userDao.save(us);
     return new ResponseEntity<RegisteringUser>(registeringUser, HttpStatus.OK);
   }
 }
