@@ -28,7 +28,7 @@
 
   <modules>
     <module>../soccerbuddy-database-connector</module>
-    <module>../soccer-buddy-service</module>
+    <module>../soccerbuddy-service</module>
   </modules>
 
   <dependencyManagement>
