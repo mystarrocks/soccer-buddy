@@ -14,9 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.soccerbuddy.dal.dao.UserProfileDao;
-import com.soccerbuddy.dal.model.UserProfile;
+import com.soccerbuddy.dataaccessor.dao.UserProfileDao;
+import com.soccerbuddy.dataaccessor.model.UserProfile;
 
+/**
+ * The webservice controller that handles user registration related activities.
+ * 
+ * @author mystarrocks
+ */
 @RestController
 class RegistrationService {
   

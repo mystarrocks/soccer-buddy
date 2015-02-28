@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.soccerbuddy</groupId>
+    <artifactId>soccerbuddy-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../soccerbuddy-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>soccerbuddy-database-connector</artifactId>
+
+  <name>soccerbuddy-database-connector</name>
+  <description>Manages the connectivity and the ORM with the backend database components; acts a data access layer for the downstream systems.</description>
+  
+  <properties>
+    <morphia.version>0.110</morphia.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.mongodb.morphia</groupId>
+      <artifactId>morphia</artifactId>
+      <version>${morphia.version}</version>
+    </dependency>
+  </dependencies>
+</project>
