@@ -33,12 +33,13 @@ class RegistrationService {
     Morphia morphia = new Morphia();
     morphia.map(UserProfile.class);
     Datastore ds = morphia.createDatastore(m, "soccer-buddy");
- 
+    
         UserProfile us = new UserProfile();
         us.setEmail(registeringUser.getEmailId());
         us.setPassword(registeringUser.getPassword());
         us.setName(registeringUser.getUsername());
         UserProfileDao userDao = new UserProfileDao(UserProfile.class, ds);    
+        userDao.
         userDao.save(us);
     return new ResponseEntity<RegisteringUser>(registeringUser, HttpStatus.OK);
   }
