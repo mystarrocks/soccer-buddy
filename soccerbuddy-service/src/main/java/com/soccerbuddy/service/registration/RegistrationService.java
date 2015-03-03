@@ -39,7 +39,6 @@ class RegistrationService {
         us.setPassword(registeringUser.getPassword());
         us.setName(registeringUser.getUsername());
         UserProfileDao userDao = new UserProfileDao(UserProfile.class, ds);    
-        userDao.
         userDao.save(us);
     return new ResponseEntity<RegisteringUser>(registeringUser, HttpStatus.OK);
   }

@@ -7,13 +7,19 @@ import org.mongodb.morphia.query.Query;
 
 public class MongoFindRequestMapper {
 	
-	private final Map<String, MongoMappedRequest> requestMap = new ConcurrentHashMap<String, MongoMappedRequest>();
+	private final static Map<String, MongoMappedRequest> requestMap = initializeMappedRequests();
 	
-	private MongoMappedRequest getRequest(String className){
+	private static final Map<String, MongoMappedRequest> initializeMappedRequests(){
+		Map<String, MongoMappedRequest> requests = new ConcurrentHashMap<String, MongoMappedRequest>();
+		requests.put("UserProfileRequest",new MongoMappedRequest(UserProfileRequest.class));
+		return requests;
+	}
+	
+	private static MongoMappedRequest getRequest(String className){
 		return requestMap.get(className);
 	}
 	
-	public <T> Query<T> buildFindRequest(Query<T> q, Object request) {
+	public static <T> Query<T> buildFindRequest(Query<T> q, Object request) {
 		MongoMappedRequest mappedRequest = getRequest(request.getClass().getName());
 
 		for (MongoMappedFields mappedField : mappedRequest.getFieldDescriptors()) {

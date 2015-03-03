@@ -7,9 +7,11 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateResults;
 
 import com.mongodb.WriteResult;
+import com.soccerbuddy.dataaccessor.dao.request.MongoFindRequestMapper;
 import com.soccerbuddy.dataaccessor.dao.request.UserProfileRequest;
 import com.soccerbuddy.dataaccessor.model.UserProfile;
 
@@ -25,14 +27,14 @@ public class UserProfileDao extends BasicDAO<UserProfile, ObjectId> implements B
 
 	@Override
 	public UserProfile find(UserProfileRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		Query<UserProfile> query = MongoFindRequestMapper.buildFindRequest(super.createQuery(), request);
+		return query.get();
 	}
 
 	@Override
-	public UserProfile findAll(UserProfileRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserProfile> findAll(UserProfileRequest request) {
+		Query<UserProfile> query = MongoFindRequestMapper.buildFindRequest(super.createQuery(), request);
+		return query.asList();
 	}
 
 	@Override

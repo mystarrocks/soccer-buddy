@@ -16,7 +16,7 @@ import com.mongodb.WriteResult;
 public interface BaseDao<T, S> {
   T find(S request);
   
-  T findAll(S request);
+  List<T> findAll(S request);
   
   List<Key<T>> createList(List<T> entities);
   
