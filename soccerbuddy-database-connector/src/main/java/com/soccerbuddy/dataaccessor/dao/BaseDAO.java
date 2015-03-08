@@ -13,7 +13,7 @@ import com.mongodb.WriteResult;
  * @param <T>
  * @param <S>
  */
-public interface BaseDao<T, S> {
+public interface BaseDAO<T, S> {
   T find(S request);
   
   List<T> findAll(S request);
@@ -25,5 +25,4 @@ public interface BaseDao<T, S> {
   WriteResult deleteAllByMatch(S request);
   
   WriteResult delete(T entity);
-  
 }
