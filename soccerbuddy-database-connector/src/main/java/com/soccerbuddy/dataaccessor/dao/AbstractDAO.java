@@ -54,7 +54,7 @@ public abstract class AbstractDAO<T, K> extends BasicDAO<T, K>{
    * @param entityClass  the entity clazz
    * @param datastore  the {@code Mongo data store} to perform database operations
    */
-  public AbstractDAO(Class<T> entityClass, Datastore datastore) {
-    super(entityClass, datastore);
+  public AbstractDAO(Class<T> entityClass) {
+    super(entityClass, SOCCERBUDDY_DATASTORE);
   }
 }

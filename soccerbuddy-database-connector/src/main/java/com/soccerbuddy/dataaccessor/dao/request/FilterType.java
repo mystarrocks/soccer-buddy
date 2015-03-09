@@ -1,5 +1,12 @@
 package com.soccerbuddy.dataaccessor.dao.request;
 
+import org.mongodb.morphia.query.FilterOperator;
+
+/**
+ * This enum corresponds to list all the valid filterValues used in {@link FilterOperator}}
+ * @author mchandramohan
+ *
+ */
 public enum FilterType {
 	IN("in"),
 	NIN("nin"),

@@ -1,6 +1,7 @@
 package com.soccerbuddy.dataaccessor.model;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -15,6 +16,8 @@ public class UserProfile {
   private String name;
   private String password;
   private String email;
+  @Embedded
+  private Attribute attribute;
 
   public ObjectId getId() {
     return id;

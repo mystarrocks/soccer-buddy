@@ -7,6 +7,12 @@ import java.util.List;
 import org.mongodb.morphia.mapping.MappingException;
 import org.mongodb.morphia.utils.ReflectionUtils;
 
+/**
+ * This is a request descriptor that lists the {@Code MongoMappedFields} based on
+ * {@link MongoInfo} for a find request
+ * @author mchandramohan
+ *
+ */
 public class MongoMappedRequest {
 	private Class<?> actualClass;
 	private List<MongoMappedFields> fieldDescriptors = new ArrayList<MongoMappedFields>();

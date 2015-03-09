@@ -5,6 +5,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.mongodb.morphia.query.Query;
 
+/**
+ * This mongo request mapper builds the {@Code Query} for an entity based on the 
+ * {@link MongoMappedRequest}} 
+ * @author mchandramohan
+ *
+ */
 public class MongoFindRequestMapper {
 	
 	private final static Map<String, MongoMappedRequest> requestMap = initializeMappedRequests();

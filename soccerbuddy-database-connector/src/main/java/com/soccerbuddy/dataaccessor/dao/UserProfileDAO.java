@@ -22,8 +22,7 @@ import com.soccerbuddy.dataaccessor.model.UserProfile;
  * @since 1.0
  */
 public class UserProfileDAO extends AbstractDAO<UserProfile, ObjectId> implements BaseDAO<UserProfile, UserProfileRequest> {
-  private static final Datastore SOCCERBUDDY_DATASTORE = dataStore();
-  private static final UserProfileDAO INSTANCE = new UserProfileDAO(SOCCERBUDDY_DATASTORE);
+  private static final UserProfileDAO INSTANCE = new UserProfileDAO();
 
   /**
    * Gets you an instance (the sole) of this type: {@code UserProfileDao} to work with.
@@ -39,8 +38,8 @@ public class UserProfileDAO extends AbstractDAO<UserProfile, ObjectId> implement
    * 
    * @param datastore  the {@code Mongo data store} object this instance is going to use to perform database operations
    */
-  private UserProfileDAO(Datastore datastore) {
-    super(UserProfile.class, datastore);
+  private UserProfileDAO() {
+    super(UserProfile.class);
   }
 
   @Override
