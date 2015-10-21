@@ -9,6 +9,7 @@ import mockit.MockUp;
 import mockit.Mocked;
 import mockit.integration.junit4.JMockit;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mongodb.morphia.DatastoreImpl;
@@ -22,6 +23,7 @@ import com.soccerbuddy.dataaccessor.model.UserProfile;
  * @since 1.0
  */
 @RunWith (JMockit.class)
+@Ignore
 public class UserProfileDAOTest {
   
   @Mocked private DatastoreImpl mockDatastore;

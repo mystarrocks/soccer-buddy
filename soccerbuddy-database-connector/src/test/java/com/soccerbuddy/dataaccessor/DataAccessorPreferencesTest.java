@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -13,6 +14,7 @@ import org.junit.Test;
  * @author mystarrocks
  * @since 1.0
  */
+@Ignore
 public class DataAccessorPreferencesTest {
   
   /**
