@@ -13,7 +13,7 @@
 
   <name>soccerbuddy-database-connector</name>
   <description>Manages the connectivity and the ORM with the backend database components; acts a data access layer for the downstream systems.</description>
-  
+
   <properties>
     <morphia.version>0.110</morphia.version>
   </properties>

@@ -1,5 +1,7 @@
 /**
- * Contains all the controllers this webservice requires.
+ * Contains all the controllers this web service requires
+ * to manage the registration and unregistration of users
+ * and groups.
  * 
  * @author mystarrocks
  * @since 1.0

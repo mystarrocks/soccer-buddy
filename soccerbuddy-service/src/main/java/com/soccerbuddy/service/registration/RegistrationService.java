@@ -1,61 +1,77 @@
 package com.soccerbuddy.service.registration;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * The controller that handles user and group registration/un-registration related activities.
+ * A RESTful web service that manages registration and unregistration of various
+ * entities in the application.
+ * 
+ * <p>
+ * All the registration/unregistration implementations are expected to be a sub context of 
+ * the root context: {@code /register} (the register as a noun, i.e a resource) like:
+ * <tt>/register/x</tt>, where '{@code x}' is the exact context of the operation. So these operations
+ * may resort to differentiating the action being taken based on the HTTP verb they support. Here's
+ * a mapping of the operations and the verb that they may choose to use:
+ * 
+ * <p>
+ * <table border="1">
+ *   <tr>
+ *     <th>Operation</th> <th>HTTP Verb</th>
+ *   </tr>
+ *   <tr>
+ *     <td>Register</td> <td>PUT</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Unregister</td> <td>DELETE</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Reregister</td> <td>POST</td>
+ *   </tr>
+ * </table>
+ * 
+ * <p>
+ * All the operations, unless specified otherwise explicitly:
+ * 
+ * <ul>
+ *   <li>consume and produce {@code JSON} (see {@link MediaType#APPLICATION_JSON}) content</li>
+ *   <li>accept the entity as a {@code @RequestBody} and return a {@code @ResponseBody} consisting
+ *   of the result of the registration (the entity itself) and certain headers</li> 
+ * </ul> 
+ * 
+ * @param <E>  the entity being registered/unregistered
  * 
  * @author mystarrocks
- * @since 1.0
  */
-@RestController
-@RequestMapping ("/register")
-@Slf4j
-class RegistrationService {
+interface RegistrationService<E> {
   
   /**
-   * Registers the given user by persisting them in the user data store.
+   * Registers the given entity by persisting them in the appropriate data store
+   * providing it the access to interact with the system further.
    * 
-   * @param registeringUser  the user attempting to register
+   * @param registeringEntity  the entity attempting to register
    * @return the result of registration
    */
-  @RequestMapping(value = "/user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<RegisteringUser> registerUser(@RequestBody RegisteringUser registeringUser) {
-    // persist the registered user
-    log.info("User attempting to register: {}", registeringUser);
-    return new ResponseEntity<RegisteringUser>(registeringUser, HttpStatus.OK);
-  }
+  public @ResponseBody ResponseEntity<E> register(@RequestBody E registeringEntity);
   
   /**
-   * Registers the given group by persisting them in the group data store.
+   * Unregisters the given entity by updating the status of the registration of the entity in the 
+   * appropriate data store preventing it the access to interact with the system further barring
+   * a re-registration.
    * 
-   * <p>
-   * If the user attempting to create is not registered with yet, they will be registered first
-   * and should the registration go through successfully, the group will be registered.
-   * 
-   * @param registeringGroup  the registering group details
-   * @return the result of registration
+   * @param unregisteringEntity  the entity attempting to unregister
+   * @return the result of unregistration
    */
-  @RequestMapping(value = "/group", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<RegisteringGroup> registerGroup(@RequestBody RegisteringGroup registeringGroup) {
-    // persist the registered user
-    log.info("Group attempting to register: {}", registeringGroup);
-    if (registeringGroup.existingUser()) {
-      // persist the registered group
-    } else {
-      RegisteringUser admin = registeringGroup.admin();
-      registerUser(admin);
-      // persist the registered group
-    }
-    return new ResponseEntity<RegisteringGroup>(registeringGroup, HttpStatus.OK);
-  }
+  public @ResponseBody ResponseEntity<E> unregister(@RequestBody E unregisteringEntity);
+  
+  /**
+   * Re-registers the given entity by updating the status of the previous registration of the entity in the 
+   * appropriate data store providing it the access to interact with the system further.
+   * 
+   * @param reregisteringEntity  the entity attempting to reregister
+   * @return the result of unregistration
+   */
+  public @ResponseBody ResponseEntity<E> reregister(@RequestBody E reregisteringEntity);
 }
