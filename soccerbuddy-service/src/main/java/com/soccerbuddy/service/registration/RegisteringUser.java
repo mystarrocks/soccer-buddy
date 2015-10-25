@@ -1,12 +1,22 @@
 package com.soccerbuddy.service.registration;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.soccerbuddy.service.Resource;
+import com.soccerbuddy.service.Result;
 
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 /**
  * An individual registering user.
@@ -20,19 +30,34 @@ import lombok.experimental.Accessors;
  * @author mystarrocks
  * @since 1.0
  * @see RegisteringGroup
+ * @see Result
  */
-@Value
-@Accessors (fluent = true)
-@Builder
 @JsonDeserialize (builder = RegisteringUser.RegisteringUserBuilder.class)
-class RegisteringUser {
-  @JsonProperty (value = "userName", required = true) String userName;
-  @JsonProperty (value = "password", required = true) String password;
-  @JsonProperty (value = "emailId", required = true) String emailId;
-  @JsonProperty (value = "phoneNumber", required = false) String phoneNumber;
+@Builder
+@FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+@ToString
+@Accessors (fluent = true)
+class RegisteringUser implements Resource {
+  
+  @NotBlank
+  @JsonProperty (value = "userName", required = true)
+  @Getter
+  String userName;
+  
+  @Email
+  @Pattern (regexp = ".+@gmail\\.com")
+  @JsonProperty (value = "emailId", required = true)
+  @Getter
+  String emailId;
+  
+  @Pattern (regexp = "\\(\\d{3}\\)-\\d{3}-\\d{4}")
+  @JsonProperty (value = "phoneNumber", required = false)
+  @Getter
+  String phoneNumber;
   
   @JsonPOJOBuilder (withPrefix = "")
   static final class RegisteringUserBuilder {
-    // an empty builder is needed to specify a JSON builder prefix of ""; would have been "with"  otherwise
+    // an empty builder is needed to specify a JSON builder prefix of ""
+    // would have been "with"  otherwise
   }
 }

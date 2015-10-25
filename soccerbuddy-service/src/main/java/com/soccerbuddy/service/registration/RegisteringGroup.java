@@ -1,12 +1,20 @@
 package com.soccerbuddy.service.registration;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.soccerbuddy.service.Resource;
 
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 /**
  * A registering group.
@@ -20,14 +28,26 @@ import lombok.experimental.Accessors;
  * @since 1.0
  * @see RegisteringUser
  */
-@Value
-@Accessors (fluent = true)
-@Builder
 @JsonDeserialize (builder = RegisteringGroup.RegisteringGroupBuilder.class)
-class RegisteringGroup {
-  @JsonProperty (value = "groupName", required = true) String groupName;
-  @JsonProperty (value = "admin", required = true) RegisteringUser admin;
-  @JsonProperty (value = "existingUser", required = false) boolean existingUser;
+@Builder
+@FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+@ToString
+@Accessors (fluent = true)
+class RegisteringGroup implements Resource {
+  
+  @NotBlank
+  @JsonProperty (value = "groupName", required = true)
+  @Getter
+  String groupName;
+  
+  @NotNull
+  @JsonProperty (value = "admin", required = true)
+  @Getter
+  RegisteringUser admin;
+  
+  @JsonProperty (value = "existingUser", required = false)
+  @Getter
+  boolean existingUser;
   
   @JsonPOJOBuilder (withPrefix = "")
   static final class RegisteringGroupBuilder {

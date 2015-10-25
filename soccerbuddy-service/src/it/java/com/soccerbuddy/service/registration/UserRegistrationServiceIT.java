@@ -19,9 +19,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Tests the RESTful APIs exposed by the {@link UserRegistrationService}.
  * 
  * @author mystarrocks
- *
  */
-public class UserRegistrationServiceTest {
+public class UserRegistrationServiceIT {
   private MockMvc mvc = standaloneSetup(new UserRegistrationService()).build();
 
   /**
@@ -36,15 +35,15 @@ public class UserRegistrationServiceTest {
     RegisteringUser user = RegisteringUser.builder().
         userName("mystarrocks").
         emailId("sunilceg7@gmail.com").
-        password("password?").
-        phoneNumber("123-456-7890").build();
+        phoneNumber("(123)-456-7890").build();
     
     mvc.perform(put("/register/user").
         content(asJsonString(user)).
         contentType(MediaType.APPLICATION_JSON)).
+      //andDo(print()).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.userName").value("mystarrocks"));
+      andExpect(jsonPath("$.resource.userName").value("mystarrocks"));
   }
   
   /**
@@ -59,15 +58,14 @@ public class UserRegistrationServiceTest {
     RegisteringUser user = RegisteringUser.builder().
         userName("mystarrocks").
         emailId("sunilceg7@gmail.com").
-        password("password?").
-        phoneNumber("123-456-7890").build();
+        phoneNumber("(123)-456-7890").build();
     
     mvc.perform(delete("/register/user").
         content(asJsonString(user)).
         contentType(MediaType.APPLICATION_JSON)).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.userName").value("mystarrocks"));
+      andExpect(jsonPath("$.resource.userName").value("mystarrocks"));
   }
   
   /**
@@ -81,15 +79,13 @@ public class UserRegistrationServiceTest {
   public void reregisterUser_200() throws JsonProcessingException, Exception {
     RegisteringUser user = RegisteringUser.builder().
         userName("mystarrocks").
-        emailId("sunilceg7@gmail.com").
-        password("password?").
-        phoneNumber("123-456-7890").build();
+        emailId("sunilceg7@gmail.com").build();
     
     mvc.perform(post("/register/user").
         content(asJsonString(user)).
         contentType(MediaType.APPLICATION_JSON)).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.userName").value("mystarrocks"));
+      andExpect(jsonPath("$.resource.userName").value("mystarrocks"));
   }
 }

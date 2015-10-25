@@ -22,9 +22,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * Tests the RESTful APIs exposed by the {@link GroupRegistrationService}.
  * 
  * @author mystarrocks
- *
  */
-public class GroupRegistrationServiceTest extends ApplicationTests {
+public class GroupRegistrationServiceIT extends ApplicationITs {
   
   @Autowired private WebApplicationContext context;
   
@@ -51,7 +50,7 @@ public class GroupRegistrationServiceTest extends ApplicationTests {
         contentType(MediaType.APPLICATION_JSON)).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.groupName").value("soccer-buddy"));
+      andExpect(jsonPath("$.resource.groupName").value("soccer-buddy"));
   }
   
   /**
@@ -76,7 +75,7 @@ public class GroupRegistrationServiceTest extends ApplicationTests {
         contentType(MediaType.APPLICATION_JSON)).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.groupName").value("soccer-buddy"));
+      andExpect(jsonPath("$.resource.groupName").value("soccer-buddy"));
   }
   
   /**
@@ -100,7 +99,7 @@ public class GroupRegistrationServiceTest extends ApplicationTests {
         contentType(MediaType.APPLICATION_JSON)).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.groupName").value("soccer-buddy"));
+      andExpect(jsonPath("$.resource.groupName").value("soccer-buddy"));
   }
   
   /**
@@ -124,7 +123,7 @@ public class GroupRegistrationServiceTest extends ApplicationTests {
         contentType(MediaType.APPLICATION_JSON)).
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
-      andExpect(jsonPath("$.groupName").value("soccer-buddy"));
+      andExpect(jsonPath("$.resource.groupName").value("soccer-buddy"));
   }
 
 }

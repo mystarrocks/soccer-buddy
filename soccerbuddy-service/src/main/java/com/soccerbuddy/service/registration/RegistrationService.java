@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soccerbuddy.service.Resource;
+import com.soccerbuddy.service.Result;
+
 /**
  * A RESTful web service that manages registration and unregistration of various
  * entities in the application.
@@ -41,11 +44,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *   of the result of the registration (the entity itself) and certain headers</li> 
  * </ul> 
  * 
- * @param <E>  the entity being registered/unregistered
+ * @param <R extends resource>  the entity being registered/unregistered
  * 
  * @author mystarrocks
  */
-interface RegistrationService<E> {
+interface RegistrationService<R extends Resource> {
   
   /**
    * Registers the given entity by persisting them in the appropriate data store
@@ -54,7 +57,7 @@ interface RegistrationService<E> {
    * @param registeringEntity  the entity attempting to register
    * @return the result of registration
    */
-  public @ResponseBody ResponseEntity<E> register(@RequestBody E registeringEntity);
+  public @ResponseBody ResponseEntity<Result<R>> register(@RequestBody R registeringEntity);
   
   /**
    * Unregisters the given entity by updating the status of the registration of the entity in the 
@@ -64,7 +67,7 @@ interface RegistrationService<E> {
    * @param unregisteringEntity  the entity attempting to unregister
    * @return the result of unregistration
    */
-  public @ResponseBody ResponseEntity<E> unregister(@RequestBody E unregisteringEntity);
+  public @ResponseBody ResponseEntity<Result<R>> unregister(@RequestBody R unregisteringEntity);
   
   /**
    * Re-registers the given entity by updating the status of the previous registration of the entity in the 
@@ -73,5 +76,5 @@ interface RegistrationService<E> {
    * @param reregisteringEntity  the entity attempting to reregister
    * @return the result of unregistration
    */
-  public @ResponseBody ResponseEntity<E> reregister(@RequestBody E reregisteringEntity);
+  public @ResponseBody ResponseEntity<Result<R>> reregister(@RequestBody R reregisteringEntity);
 }

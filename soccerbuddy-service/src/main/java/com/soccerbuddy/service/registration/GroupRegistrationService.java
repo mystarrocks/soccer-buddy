@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soccerbuddy.service.Result;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -37,7 +39,7 @@ class GroupRegistrationService implements RegistrationService<RegisteringGroup> 
    */
   @Override
   @RequestMapping(value = "/group", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<RegisteringGroup> register(@RequestBody RegisteringGroup registeringGroup) {
+  public @ResponseBody ResponseEntity<Result<RegisteringGroup>> register(@RequestBody RegisteringGroup registeringGroup) {
     log.info("Group attempting to register: {}", registeringGroup);
     if (registeringGroup.existingUser()) {
       // persist the registered group
@@ -46,23 +48,26 @@ class GroupRegistrationService implements RegistrationService<RegisteringGroup> 
       userRegistrar.register(admin);
       // persist the registered group
     }
-    return new ResponseEntity<RegisteringGroup>(registeringGroup, HttpStatus.OK);
+    Result<RegisteringGroup> result = Result.success(registeringGroup);
+    return new ResponseEntity<Result<RegisteringGroup>>(result, HttpStatus.OK);
   }
 
   @Override
   @RequestMapping(value = "/group", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<RegisteringGroup> unregister(@RequestBody RegisteringGroup unregisteringGroup) {
+  public @ResponseBody ResponseEntity<Result<RegisteringGroup>> unregister(@RequestBody RegisteringGroup unregisteringGroup) {
     log.info("Group attempting to unregister: {}", unregisteringGroup);
     // persist the new status of the group
-    return new ResponseEntity<RegisteringGroup>(unregisteringGroup, HttpStatus.OK);
+    Result<RegisteringGroup> result = Result.success(unregisteringGroup);
+    return new ResponseEntity<Result<RegisteringGroup>>(result, HttpStatus.OK);
   }
 
   @Override
   @RequestMapping(value = "/group", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<RegisteringGroup> reregister(@RequestBody RegisteringGroup reregisteringGroup) {
+  public @ResponseBody ResponseEntity<Result<RegisteringGroup>> reregister(@RequestBody RegisteringGroup reregisteringGroup) {
     log.info("Group attempting to re-register: {}", reregisteringGroup);
     // persist the new status of the group
-    return new ResponseEntity<RegisteringGroup>(reregisteringGroup, HttpStatus.OK);
+    Result<RegisteringGroup> result = Result.success(reregisteringGroup);
+    return new ResponseEntity<Result<RegisteringGroup>>(result, HttpStatus.OK);
   }
   
 }
