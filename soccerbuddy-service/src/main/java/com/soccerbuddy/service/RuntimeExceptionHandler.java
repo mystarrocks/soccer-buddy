@@ -1,11 +1,7 @@
 package com.soccerbuddy.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soccerbuddy.service.ServiceError.Type;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Handles all the failed request validations resulting in
@@ -23,22 +21,18 @@ import com.soccerbuddy.service.ServiceError.Type;
  * @see https://jira.spring.io/browse/SPR-10961
  */
 @ControllerAdvice (annotations = RestController.class)
-public class RequestValidationExceptionHandler implements ResourceExceptionHandler<MethodArgumentNotValidException> {
+@Slf4j
+public class RuntimeExceptionHandler implements ResourceExceptionHandler<RuntimeException> {
   
-  @ExceptionHandler (value = MethodArgumentNotValidException.class)
+  @ExceptionHandler (value = NullPointerException.class)
   @ResponseBody
   @Override
-  public ResponseEntity<ServiceError> handleException(MethodArgumentNotValidException e) {
-    List<ObjectError> errors = e.getBindingResult().getAllErrors();
-    String description = 
-        errors.stream()
-          .map(ObjectError :: getDefaultMessage)
-          .collect(Collectors.joining("; "));
+  public ResponseEntity<ServiceError> handleException(RuntimeException e) {
+    log.error("An uncaught exception was thrown during one of the requests: ", e);
     ServiceError error = 
         ServiceError.builder()
-          .type(Type.VALIDATION_ERROR)
-          .description(description).build();
-    
-    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+          .type(Type.UNKNOWN_SERVER_ERROR)
+          .description("Something went wrong on the server: " + e.getMessage()).build();
+    return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

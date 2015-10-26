@@ -45,6 +45,7 @@ class RegisteringUser implements Resource {
   String userName;
   
   @Email
+  @NotBlank
   @Pattern (regexp = ".+@gmail\\.com")
   @JsonProperty (value = "emailId", required = true)
   @Getter

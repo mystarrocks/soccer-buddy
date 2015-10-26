@@ -20,13 +20,16 @@ public class ServiceErrorTest {
   public void instanceControl_Types() {
     ServiceError.Type[] types = ServiceError.Type.values();
     
-    assertThat(types, arrayContainingInAnyOrder(ServiceError.Type.NONE, ServiceError.Type.VALIDATION_ERROR));
+    assertThat(types, arrayContainingInAnyOrder(ServiceError.Type.NONE, ServiceError.Type.VALIDATION_ERROR, ServiceError.Type.UNKNOWN_SERVER_ERROR));
     
     assertThat(ServiceError.Type.NONE.code(), is(20001));
     assertThat(ServiceError.Type.NONE.message(), is(""));
     
     assertThat(ServiceError.Type.VALIDATION_ERROR.code(), is(40001));
     assertThat(ServiceError.Type.VALIDATION_ERROR.message(), is("Validation failure error"));
+    
+    assertThat(ServiceError.Type.UNKNOWN_SERVER_ERROR.code(), is(50001));
+    assertThat(ServiceError.Type.UNKNOWN_SERVER_ERROR.message(), is("Unknown server error"));
   }
   
   /**

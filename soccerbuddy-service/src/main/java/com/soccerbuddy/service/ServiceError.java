@@ -47,7 +47,7 @@ public final class ServiceError implements Serializable {
    */
   @Getter
   @Accessors (fluent = true)
-  static enum Type {
+  public static enum Type {
     // Good ones
     /**
      * A non-error.
@@ -58,7 +58,13 @@ public final class ServiceError implements Serializable {
     /**
      * The error type indicating a validation failure of a {@code HTTP} request.
      */
-    VALIDATION_ERROR(40001, "Validation failure error");
+    VALIDATION_ERROR(40001, "Validation failure error"),
+    
+    // Server errors
+    /**
+     * An error type indicating that something went terribly wrong on the server.
+     */
+    UNKNOWN_SERVER_ERROR(50001, "Unknown server error");
     
     private int code;
     private String message;

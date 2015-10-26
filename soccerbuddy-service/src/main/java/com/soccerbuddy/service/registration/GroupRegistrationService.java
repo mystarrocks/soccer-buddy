@@ -1,5 +1,7 @@
 package com.soccerbuddy.service.registration;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,7 +41,7 @@ class GroupRegistrationService implements RegistrationService<RegisteringGroup> 
    */
   @Override
   @RequestMapping(value = "/group", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<Result<RegisteringGroup>> register(@RequestBody RegisteringGroup registeringGroup) {
+  public @ResponseBody ResponseEntity<Result<RegisteringGroup>> register(@Valid @RequestBody RegisteringGroup registeringGroup) {
     log.info("Group attempting to register: {}", registeringGroup);
     if (registeringGroup.existingUser()) {
       // persist the registered group
