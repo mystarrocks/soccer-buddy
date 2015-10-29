@@ -18,7 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.soccerbuddy.service.ServiceError;
+import com.soccerbuddy.model.RegisteringUser;
+import com.soccerbuddy.model.ServiceError;
 
 /**
  * Tests the RESTful APIs exposed by the {@link UserRegistrationService}.

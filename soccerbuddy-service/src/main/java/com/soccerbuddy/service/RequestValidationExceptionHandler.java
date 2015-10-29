@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soccerbuddy.service.ServiceError.Type;
+import com.soccerbuddy.model.ServiceError;
+import com.soccerbuddy.model.ServiceError.Type;
 
 /**
  * Handles all the failed request validations resulting in

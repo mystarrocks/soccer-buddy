@@ -9,20 +9,32 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>soccerbuddy-database-connector</artifactId>
+  <artifactId>soccerbuddy-data</artifactId>
 
-  <name>soccerbuddy-database-connector</name>
-  <description>Manages the connectivity and the ORM with the backend database components; acts a data access layer for the downstream systems.</description>
+  <name>soccerbuddy-data</name>
+  <description>Manages the connectivity and the ORM with the back-end database components; acts a data access layer for the downstream systems.</description>
 
   <properties>
     <morphia.version>0.110</morphia.version>
+    <dynamodb.version>1.10.28</dynamodb.version>
   </properties>
 
   <dependencies>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>soccerbuddy-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.mongodb.morphia</groupId>
       <artifactId>morphia</artifactId>
       <version>${morphia.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-dynamodb</artifactId>
+      <version>${dynamodb.version}</version>
     </dependency>
   </dependencies>
 </project>

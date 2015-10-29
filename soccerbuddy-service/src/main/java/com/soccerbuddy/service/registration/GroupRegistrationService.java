@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soccerbuddy.service.Result;
+import com.soccerbuddy.model.RegisteringGroup;
+import com.soccerbuddy.model.RegisteringUser;
+import com.soccerbuddy.model.Result;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.soccerbuddy.service.registration;
+package com.soccerbuddy.model;
 
 import javax.validation.constraints.Pattern;
 
@@ -8,8 +8,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.soccerbuddy.service.Resource;
-import com.soccerbuddy.service.Result;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,7 +35,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
 @ToString
 @Accessors (fluent = true)
-class RegisteringUser implements Resource {
+public class RegisteringUser implements Resource {
   
   @NotBlank
   @JsonProperty (value = "userName", required = true)
@@ -57,7 +55,7 @@ class RegisteringUser implements Resource {
   String phoneNumber;
   
   @JsonPOJOBuilder (withPrefix = "")
-  static final class RegisteringUserBuilder {
+  public static final class RegisteringUserBuilder {
     // an empty builder is needed to specify a JSON builder prefix of ""
     // would have been "with"  otherwise
   }

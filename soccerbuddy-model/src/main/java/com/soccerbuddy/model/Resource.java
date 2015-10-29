@@ -1,4 +1,4 @@
-package com.soccerbuddy.service;
+package com.soccerbuddy.model;
 
 /**
  * A resource that can be created/retrieved/updated/deleted

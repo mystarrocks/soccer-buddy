@@ -12,14 +12,14 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.google.common.collect.Lists;
-import com.soccerbuddy.service.ServiceError.Type;
+import com.soccerbuddy.model.ServiceError;
+import com.soccerbuddy.model.ServiceError.Type;
 
 /**
  * Test the {@link RequestValidationExceptionHandler}'s public API.

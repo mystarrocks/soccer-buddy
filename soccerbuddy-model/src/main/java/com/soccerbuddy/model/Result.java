@@ -1,6 +1,6 @@
-package com.soccerbuddy.service;
+package com.soccerbuddy.model;
 
-import static com.soccerbuddy.service.ResponseCode.SUCCESS;
+import static com.soccerbuddy.model.ResponseCode.SUCCESS;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

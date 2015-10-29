@@ -1,10 +1,12 @@
-package com.soccerbuddy.service;
+package com.soccerbuddy.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
+
+import com.soccerbuddy.model.ResponseCode;
 
 /**
  * Tests the {@link ResponseCode}'s public API.

@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.soccerbuddy.service.Resource;
-import com.soccerbuddy.service.Result;
+import com.soccerbuddy.model.Resource;
+import com.soccerbuddy.model.Result;
 
 /**
  * A RESTful web service that manages registration and unregistration of various

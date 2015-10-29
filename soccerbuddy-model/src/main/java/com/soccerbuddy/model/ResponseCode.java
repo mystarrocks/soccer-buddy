@@ -1,4 +1,4 @@
-package com.soccerbuddy.service;
+package com.soccerbuddy.model;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;

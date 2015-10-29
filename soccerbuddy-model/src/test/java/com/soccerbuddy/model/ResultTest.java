@@ -1,10 +1,13 @@
-package com.soccerbuddy.service;
+package com.soccerbuddy.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
+
+import com.soccerbuddy.model.ResponseCode;
+import com.soccerbuddy.model.ServiceError;
 
 /**
  * Tests the {@link Result}'s public API.

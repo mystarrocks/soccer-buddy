@@ -39,7 +39,8 @@
   </properties>
 
   <modules>
-    <module>soccerbuddy-database-connector</module>
+    <module>soccerbuddy-model</module>
+    <module>soccerbuddy-data</module>
     <module>soccerbuddy-service</module>
   </modules>
 
