@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
@@ -23,6 +24,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Accessors (fluent = true)
 @FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+@ToString
 public final class ServiceError implements Serializable {
   private static final long serialVersionUID = -1338724449698535090L;
   

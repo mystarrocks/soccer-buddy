@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -12,9 +13,11 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 /**
  * An individual registering user.
@@ -53,6 +56,10 @@ public class RegisteringUser implements Resource {
   @JsonProperty (value = "phoneNumber", required = false)
   @Getter
   String phoneNumber;
+  
+  @JsonIgnore
+  @NonFinal @Getter @Setter @Accessors (fluent = false)
+  boolean audited;
   
   @JsonPOJOBuilder (withPrefix = "")
   public static final class RegisteringUserBuilder {

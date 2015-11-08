@@ -1,2 +1,7 @@
 *.index
+.project
+/.settings/
 .metadata/
+/target/
+/logs/
+jacoco.exec

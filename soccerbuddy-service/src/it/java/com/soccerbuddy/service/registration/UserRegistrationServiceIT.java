@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,7 +30,14 @@ public class UserRegistrationServiceIT extends ApplicationITs {
   
   @Autowired private WebApplicationContext context;
   
-  private MockMvc mvc = standaloneSetup(new UserRegistrationService()).build();
+  private MockMvc mvc;
+  
+  @Before
+  @Override
+  public void init() {
+    super.init();
+    mvc = webAppContextSetup(context).build();
+  }
   
   /**
    * Tests the {@link UserRegistrationService#register(RegisteringUser)} operation
@@ -41,11 +48,10 @@ public class UserRegistrationServiceIT extends ApplicationITs {
    */
   @Test
   public void registerUser_400_ValidationFailure() throws JsonProcessingException, Exception {
-    MockMvc localMvc = webAppContextSetup(context).build();
     RegisteringUser user = RegisteringUser.builder().
         phoneNumber("123-456-7890").build();
     
-    localMvc.perform(put("/register/user")
+    mvc.perform(put("/register/user")
         .content(asJsonString(user))
         .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isBadRequest())
@@ -77,6 +83,8 @@ public class UserRegistrationServiceIT extends ApplicationITs {
       andExpect(status().isOk()).
       andExpect(content().contentType(MediaType.APPLICATION_JSON)).
       andExpect(jsonPath("$.resource.userName").value("mystarrocks"));
+    
+    //assertThat(user.isAudited(), is(true));
   }
   
   /**

@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,7 +31,14 @@ public class GroupRegistrationServiceIT extends ApplicationITs {
   
   @Autowired private WebApplicationContext context;
   
-  private MockMvc mvc = standaloneSetup(new GroupRegistrationService()).build();
+  private MockMvc mvc;
+  
+  @Before
+  @Override
+  public void init() {
+    super.init();
+    mvc = webAppContextSetup(context).build();
+  }
   
   /**
    * Tests the {@link GroupRegistrationService#register(RegisteringGroup)} operation
@@ -42,11 +49,10 @@ public class GroupRegistrationServiceIT extends ApplicationITs {
    */
   @Test
   public void register_ExistingUser_400_ValidationFailure() throws JsonProcessingException, Exception {
-    MockMvc localMvc = webAppContextSetup(context).build();
     RegisteringGroup group = RegisteringGroup.builder()
         .existingUser(true).build();
     
-    localMvc.perform(put("/register/group")
+    mvc.perform(put("/register/group")
         .content(asJsonString(group))
         .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isBadRequest())
@@ -90,14 +96,13 @@ public class GroupRegistrationServiceIT extends ApplicationITs {
    */
   @Test
   public void register_NewUser_200() throws JsonProcessingException, Exception {
-    MockMvc localMvc = webAppContextSetup(context).build();
     RegisteringUser admin = RegisteringUser.builder().userName("mystarrocks").build();
     RegisteringGroup group = RegisteringGroup.builder()
         .admin(admin)
         .existingUser(false)
         .groupName("soccer-buddy").build();
     
-    localMvc.perform(put("/register/group")
+    mvc.perform(put("/register/group")
         .content(asJsonString(group))
         .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())

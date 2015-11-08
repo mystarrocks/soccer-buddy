@@ -11,5 +11,5 @@ package com.soccerbuddy.model;
  * @author mystarrocks
  * @since 1.0
  */
-public interface Resource {
+public interface Resource extends Auditable {
 }

@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
  * @author mchandramohan
  *
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD) 
+@Retention (RetentionPolicy.RUNTIME)
+@Target (ElementType.FIELD) 
 public @interface MongoInfo {
 	String property();
 	FilterType filterType() default FilterType.EQUALS;

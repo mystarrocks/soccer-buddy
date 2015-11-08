@@ -1,76 +1,143 @@
 {
-  "configuration": 
-  {
-    "name": "Default",
-    "properties": 
-    {
-      "property": 
-      [
-        {
-          "name": "Directory",
-          "value": "C:/logs"
-        },
+  "configuration": {
+    "name": "default", 
+    "properties": {
+      "property": [{
+          "name": "logDirectory", 
+          "value": "logs"
+        }, {
+          "name": "defaultLog", 
+          "value": "default.log"
+        }, {
+          "name": "serviceLog", 
+          "value": "service.log"
+        }, {
+          "name": "registrationLog", 
+          "value": "registration.log"
+        }, {
+          "name": "timingLog", 
+          "value": "timing.log"
+        }]
+    }, 
 
-        {
-          "name": "FileName",
-          "value": "test.log"
+    "appenders": {
+      "console": {
+        "name": "console", 
+        "target": "SYSTEM_OUT", 
+        "PatternLayout": {
+          "pattern": "%highlight{%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %x %relative %-5level [%marker] %line@%logger{1.}.%method - %msg%n}"
         }
-      ]
-    },
+      }, 
 
-    "appenders": 
-    {
-      "Console": 
-      {
-        "name": "Console",
-        "target": "SYSTEM_OUT",
-        "PatternLayout": 
-        {
-          "pattern": "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
-        }
-      },
+      "RollingFile": [{
+        "name": "rootFile", 
+        "fileName": "${logDirectory}/${defaultLog}", 
+        "filePattern": "${logDirectory}/${date:yyyy-MM}/default-%d{MM-dd-yyyy}-%i.log.gz", 
+        "PatternLayout": {
+          "pattern": "%highlight{%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %x %relative %-5level [%marker] %line@%logger{1.}.%method - %msg%n}"
+        }, 
 
-      "RollingFile": 
-      {
-        "name": "File",
-        "fileName": "${Directory}/${FileName}",
-        "filePattern": "${Directory}/${date:yyyy-MM}/test-%d{MM-dd-yyyy}-%i.log.gz",
-        "PatternLayout": 
-        {
-          "pattern": "%d %p %logger{36} [%t] %m%n"
-        },
-
-        "Policies": 
-        {
-          "SizeBasedTriggeringPolicy": 
-          {
-            "size": "100 MB"
+        "Policies": {
+          "SizeBasedTriggeringPolicy": {
+            "size": "10 MB"
           }
-        },
+        }, 
 
-        "DefaultRolloverStrategy": 
-        {
+        "DefaultRolloverStrategy": {
           "max": "10"
         }
-      }
-    },
+      }, {
+        "name": "serviceFile", 
+        "fileName": "${logDirectory}/${serviceLog}", 
+        "filePattern": "${logDirectory}/${date:yyyy-MM}/service-%d{MM-dd-yyyy}-%i.log.gz", 
+        "PatternLayout": {
+          "pattern": "%highlight{%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %x %relative %-5level [%marker] %line@%logger{1.}.%method - %msg%n}"
+        }, 
 
-    "loggers": 
-    {
-      "root": 
-      {
-        "level": "info",
-        "appender-ref": 
-        [
-          {
-            "ref": "File"
-          },
-
-          {
-            "ref": "Console"
+        "Policies": {
+          "SizeBasedTriggeringPolicy": {
+            "size": "10 MB"
           }
-        ]
-      }
+        }, 
+
+        "DefaultRolloverStrategy": {
+          "max": "10"
+        }
+      }, {
+        "name": "registrationFile", 
+        "fileName": "${logDirectory}/${registrationLog}", 
+        "filePattern": "${logDirectory}/${date:yyyy-MM}/registration-%d{MM-dd-yyyy}-%i.log.gz", 
+        "PatternLayout": {
+          "pattern": "%highlight{%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %x %relative %-5level [%marker] %line@%logger{1.}.%method - %msg%n}"
+        }, 
+
+        "Policies": {
+          "SizeBasedTriggeringPolicy": {
+            "size": "10 MB"
+          }
+        }, 
+
+        "DefaultRolloverStrategy": {
+          "max": "10"
+        }
+      }, {
+        "name": "timingFile", 
+        "fileName": "${logDirectory}/${timingLog}", 
+        "filePattern": "${logDirectory}/${date:yyyy-MM}/timing-%d{MM-dd-yyyy}-%i.log.gz", 
+        "PatternLayout": {
+          "pattern": "%highlight{%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %x %relative %-5level [%marker] %line@%class{1.}.%method - %msg%n}"
+        }, 
+
+        "Policies": {
+          "SizeBasedTriggeringPolicy": {
+            "size": "10 MB"
+          }
+        }, 
+
+        "DefaultRolloverStrategy": {
+          "max": "10"
+        }
+      }]
+    }, 
+
+    "loggers": {
+      "root": {
+        "level": "info", 
+        "appender-ref": [{
+            "ref": "rootFile"
+          }, {
+            "ref": "console"
+          }]
+      }, 
+
+      "logger": [{
+        "name": "com.soccerbuddy",
+        "additivity": "true",
+        "level": "info", 
+        "appender-ref": [{
+            "ref": "serviceFile"
+          }, {
+            "ref": "console"
+          }]
+      }, {
+        "name": "com.soccerbuddy.service.registration",
+        "additivity": "true",
+        "level": "info", 
+        "appender-ref": [{
+            "ref": "registrationFile"
+          }, {
+            "ref": "console"
+          }]
+      }, {
+        "name": "timer",
+        "additivity": "true",
+        "level": "info", 
+        "appender-ref": [{
+            "ref": "timingFile"
+          }, {
+            "ref": "console"
+          }]
+      }]
     }
   }
 }

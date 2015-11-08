@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -11,9 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 /**
  * A registering group.
@@ -47,6 +50,10 @@ public class RegisteringGroup implements Resource {
   @JsonProperty (value = "existingUser", required = false)
   @Getter
   boolean existingUser;
+  
+  @JsonIgnore
+  @NonFinal @Getter @Setter @Accessors (fluent = false)
+  boolean audited;
   
   @JsonPOJOBuilder (withPrefix = "")
   public static final class RegisteringGroupBuilder {

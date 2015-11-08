@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soccerbuddy.annotation.ServiceMethod;
 import com.soccerbuddy.model.RegisteringUser;
 import com.soccerbuddy.model.Result;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The web service that handles the user registration and unregistration activities.
@@ -24,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping ("/register")
-@Slf4j
 class UserRegistrationService implements RegistrationService<RegisteringUser> {
   
   /**
@@ -34,10 +32,10 @@ class UserRegistrationService implements RegistrationService<RegisteringUser> {
    * @return the result of registration
    */
   @Override
-  @RequestMapping(value = "/user", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping (value = "/user", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = "User registration", customFailureMarker = "USER_REGISTRATION_FAILURE")
   public @ResponseBody ResponseEntity<Result<RegisteringUser>> register(@Valid @RequestBody RegisteringUser registeringUser) {
     // persist the registered user
-    log.info("User attempting to register: {}", registeringUser);
     Result<RegisteringUser> result = Result.success(registeringUser);
     return new ResponseEntity<Result<RegisteringUser>>(result, HttpStatus.OK);
   }
@@ -50,10 +48,10 @@ class UserRegistrationService implements RegistrationService<RegisteringUser> {
    * @return the result of unregistration
    */
   @Override
-  @RequestMapping(value = "/user", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping (value = "/user", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = "User unregistration", customFailureMarker = "USER_UNREGISTRATION_FAILURE")
   public @ResponseBody ResponseEntity<Result<RegisteringUser>> unregister(@Valid @RequestBody RegisteringUser unregisteringUser) {
     // persist the new status of the registered user
-    log.info("User attempting to unregister: {}", unregisteringUser);
     Result<RegisteringUser> result = Result.success(unregisteringUser);
     return new ResponseEntity<Result<RegisteringUser>>(result, HttpStatus.OK);
   }
@@ -66,10 +64,10 @@ class UserRegistrationService implements RegistrationService<RegisteringUser> {
    * @return the result of reregistration
    */
   @Override
-  @RequestMapping(value = "/user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping (value = "/user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = "User reregistration", customFailureMarker = "USER_REREGISTRATION_FAILURE")
   public @ResponseBody ResponseEntity<Result<RegisteringUser>> reregister(@Valid @RequestBody RegisteringUser reregisteringUser) {
     // persist the registered user
-    log.info("User attempting to reregister: {}", reregisteringUser);
     Result<RegisteringUser> result = Result.success(reregisteringUser);
     return new ResponseEntity<Result<RegisteringUser>>(result, HttpStatus.OK);
   }

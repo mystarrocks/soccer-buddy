@@ -1,8 +1,11 @@
 package com.soccerbuddy.service;
 
+import static com.soccerbuddy.model.LogMarker.VALIDATION_FAILURE;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Marker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soccerbuddy.model.LogMarker;
 import com.soccerbuddy.model.ServiceError;
 import com.soccerbuddy.model.ServiceError.Type;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Handles all the failed request validations resulting in
@@ -24,12 +30,15 @@ import com.soccerbuddy.model.ServiceError.Type;
  * @see https://jira.spring.io/browse/SPR-10961
  */
 @ControllerAdvice (annotations = RestController.class)
+@Slf4j
 public class RequestValidationExceptionHandler implements ResourceExceptionHandler<MethodArgumentNotValidException> {
+  private static final Marker MARKER_VALIDATION_FAILURE = LogMarker.asSlf4jMarker(VALIDATION_FAILURE);
   
   @ExceptionHandler (value = MethodArgumentNotValidException.class)
   @ResponseBody
   @Override
   public ResponseEntity<ServiceError> handleException(MethodArgumentNotValidException e) {
+    LOGGER.error(MARKER_VALIDATION_FAILURE, "Request validation failed.", e);
     List<ObjectError> errors = e.getBindingResult().getAllErrors();
     String description = 
         errors.stream()

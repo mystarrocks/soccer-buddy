@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Id;
  * FIXME: add documentation
  *
  */
-@Entity(value = "user_profile", noClassnameStored = true)
+@Entity (value = "user_profile", noClassnameStored = true)
 public class UserProfile {
   @Id
   private ObjectId id;
