@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.soccerbuddy.model.ServiceError;
+import com.soccerbuddy.exception.ServiceError;
 
 /**
  * Tests the {@link RuntimeExceptionHandler}'s public API.

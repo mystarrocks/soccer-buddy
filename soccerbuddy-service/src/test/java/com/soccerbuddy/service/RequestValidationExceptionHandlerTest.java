@@ -18,8 +18,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.google.common.collect.Lists;
-import com.soccerbuddy.model.ServiceError;
-import com.soccerbuddy.model.ServiceError.Type;
+import com.soccerbuddy.exception.ServiceError;
+import com.soccerbuddy.exception.ServiceError.Type;
 
 /**
  * Test the {@link RequestValidationExceptionHandler}'s public API.
@@ -38,6 +38,9 @@ public class RequestValidationExceptionHandlerTest {
     assertThat(RequestValidationExceptionHandler.class, is(typeCompatibleWith(ResourceExceptionHandler.class)));
   }
   
+  /**
+   * Tests the exception handling abilities of {@link RequestValidationExceptionHandler#handleException(MethodArgumentNotValidException)}.
+   */
   @Test
   public void handleException() {
     ObjectError error1 = mock(ObjectError.class, "error1");

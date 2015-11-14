@@ -9,15 +9,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Index;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 
 /**
  * An individual registering user.
@@ -34,36 +38,53 @@ import lombok.experimental.NonFinal;
  * @see Result
  */
 @JsonDeserialize (builder = RegisteringUser.RegisteringUserBuilder.class)
+@Entity
+@NoArgsConstructor (access = AccessLevel.PRIVATE)
+@AllArgsConstructor (access = AccessLevel.PRIVATE)
 @Builder
-@FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
-@ToString
 @Accessors (fluent = true)
+@ToString
 public class RegisteringUser implements Resource {
   
   @NotBlank
   @JsonProperty (value = "userName", required = true)
+  @Id
   @Getter
-  String userName;
+  private String userName;
   
   @Email
   @NotBlank
   @Pattern (regexp = ".+@gmail\\.com")
   @JsonProperty (value = "emailId", required = true)
+  @Index
   @Getter
-  String emailId;
+  private String emailId;
   
   @Pattern (regexp = "\\(\\d{3}\\)-\\d{3}-\\d{4}")
   @JsonProperty (value = "phoneNumber", required = false)
   @Getter
-  String phoneNumber;
+  private String phoneNumber;
+  
+  @JsonProperty (value = "status", required = false)
+  @Index
+  @Getter @Setter
+  private UserRegistrationStatus status;
   
   @JsonIgnore
-  @NonFinal @Getter @Setter @Accessors (fluent = false)
-  boolean audited;
+  @Ignore
+  @Getter @Setter @Accessors (fluent = false)
+  private boolean audited;
   
+  /**
+   * The builder utility that helps build instances of the [enclosing] type:
+   * {@link RegisteringUser}.
+   * 
+   * @author mystarrocks
+   * @since 1.0
+   */
   @JsonPOJOBuilder (withPrefix = "")
   public static final class RegisteringUserBuilder {
     // an empty builder is needed to specify a JSON builder prefix of ""
-    // would have been "with"  otherwise
+    // would have been "with" otherwise
   }
 }

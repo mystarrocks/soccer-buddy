@@ -7,7 +7,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.soccerbuddy.model.LogMarker;
+import com.soccerbuddy.exception.LogMarker;
 
 /**
  * A {@code RESTful} web service operation/method that usually

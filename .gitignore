@@ -1,6 +1,7 @@
 *.index
 .project
 /.settings/
+/.classpath
 .metadata/
 /target/
 /logs/

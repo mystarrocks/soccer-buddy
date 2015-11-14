@@ -6,8 +6,7 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 
-import com.soccerbuddy.model.ResponseCode;
-import com.soccerbuddy.model.ServiceError;
+import com.soccerbuddy.exception.ServiceError;
 
 /**
  * Tests the {@link Result}'s public API.

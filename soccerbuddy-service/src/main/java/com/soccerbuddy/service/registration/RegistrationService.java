@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soccerbuddy.data.DataStoreException;
 import com.soccerbuddy.model.Resource;
 import com.soccerbuddy.model.Result;
 
@@ -44,7 +45,7 @@ import com.soccerbuddy.model.Result;
  *   of the result of the registration (the entity itself) and certain headers</li> 
  * </ul> 
  * 
- * @param <R extends resource>  the entity being registered/unregistered
+ * @param <R>  the entity being registered/unregistered
  * 
  * @author mystarrocks
  */
@@ -56,8 +57,10 @@ interface RegistrationService<R extends Resource> {
    * 
    * @param registeringEntity  the entity attempting to register
    * @return the result of registration
+   * @throws DataStoreException if an invalid set of data was passed in to perform registration
+   * (like, say, an already registered and active entity) 
    */
-  public @ResponseBody ResponseEntity<Result<R>> register(@RequestBody R registeringEntity);
+  public @ResponseBody ResponseEntity<Result<R>> register(@RequestBody R registeringEntity) throws DataStoreException;
   
   /**
    * Unregisters the given entity by updating the status of the registration of the entity in the 
@@ -66,8 +69,10 @@ interface RegistrationService<R extends Resource> {
    * 
    * @param unregisteringEntity  the entity attempting to unregister
    * @return the result of unregistration
+   * @throws DataStoreException if an invalid set of data was passed in to perform unregistration
+   * (like, say, an already unregistered and unactive entity)
    */
-  public @ResponseBody ResponseEntity<Result<R>> unregister(@RequestBody R unregisteringEntity);
+  public @ResponseBody ResponseEntity<Result<R>> unregister(@RequestBody R unregisteringEntity) throws DataStoreException;
   
   /**
    * Re-registers the given entity by updating the status of the previous registration of the entity in the 
@@ -75,6 +80,8 @@ interface RegistrationService<R extends Resource> {
    * 
    * @param reregisteringEntity  the entity attempting to reregister
    * @return the result of unregistration
+   * @throws DataStoreException if an invalid set of data was passed in to perform reregistration
+   * (like, say, an already registered and active entity)
    */
-  public @ResponseBody ResponseEntity<Result<R>> reregister(@RequestBody R reregisteringEntity);
+  public @ResponseBody ResponseEntity<Result<R>> reregister(@RequestBody R reregisteringEntity) throws DataStoreException;
 }

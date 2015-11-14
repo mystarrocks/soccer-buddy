@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.soccerbuddy.model.ServiceError;
+import com.soccerbuddy.exception.ServiceError;
 
 /**
  * Handles the exceptions thrown by the web service operations
@@ -23,7 +23,7 @@ import com.soccerbuddy.model.ServiceError;
  * 
  * @author mystarrocks
  * @since 1.0
- * @see https://jira.spring.io/browse/SPR-10961
+ * @see <a href="https://jira.spring.io/browse/SPR-10961">SPR-10961</a>
  */
 public interface ResourceExceptionHandler<E> {
   

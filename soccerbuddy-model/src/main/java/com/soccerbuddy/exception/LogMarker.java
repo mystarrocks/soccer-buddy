@@ -1,4 +1,4 @@
-package com.soccerbuddy.model;
+package com.soccerbuddy.exception;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;

@@ -1,6 +1,6 @@
 package com.soccerbuddy.service;
 
-import static com.soccerbuddy.model.LogMarker.TIMES;
+import static com.soccerbuddy.exception.LogMarker.TIMES;
 
 import java.util.UUID;
 
@@ -11,12 +11,18 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.soccerbuddy.annotation.ServiceMethod;
-import com.soccerbuddy.model.LogMarker;
+import com.soccerbuddy.data.DataStoreException;
+import com.soccerbuddy.exception.LogMarker;
+import com.soccerbuddy.exception.ServiceError;
+import com.soccerbuddy.exception.ServiceError.Type;
 import com.soccerbuddy.model.Resource;
+import com.soccerbuddy.model.ResponseCode;
+import com.soccerbuddy.model.Result;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,8 +64,10 @@ public class ServiceMethodHandler {
    * @param joinPoint  the join point to proceed execution of target method
    * @param resource  the resource being acted on by the web service method
    * @param serviceMethod  the service method annotation with the advising preferences
+   * @return the original response returned by the target method to the caller
    * @throws Throwable if the target method threw one
    */
+  @SuppressWarnings("unchecked")
   @Around ("execution(public org.springframework.http.ResponseEntity *(..))"
       + "&& args(resource)"
       + "&& @annotation (serviceMethod)")
@@ -78,21 +86,21 @@ public class ServiceMethodHandler {
     }
     
     long startTime = System.nanoTime();
-    ResponseEntity<?> result = null;
+    ResponseEntity<Result<?>> result = null;
     Exception exc = null;
     
     try {
-      result = (ResponseEntity<?>) joinPoint.proceed(joinPoint.getArgs());
+      result = (ResponseEntity<Result<?>>) joinPoint.proceed(joinPoint.getArgs());
+    } catch (DataStoreException e) {
+      exc = e;
+      targetLogger.error(failureMarker, action, exc);
+      result = handleDataStoreException(resource, e);
     } catch (Exception e) {
       exc = e;
       targetLogger.error(failureMarker, action, exc);
     } finally {
       long endTime = System.nanoTime();
-      if (result != null) {
-        targetLogger.info("Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}", action, resource, result.getBody(), result.getStatusCode(), exc);
-      } else {
-        targetLogger.info("Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}", action, resource, result, "500", exc);
-      }
+      logResult(resource, targetLogger, action, result, exc);
       
       long timeTaken = endTime - startTime;
       timingLogger.info(LogMarker.asSlf4jMarker(TIMES), Long.toString(timeTaken));
@@ -102,5 +110,34 @@ public class ServiceMethodHandler {
     
     ThreadContext.pop();
     return result;
+  }
+  
+  private ResponseEntity<Result<?>> handleDataStoreException(Resource resource, DataStoreException e) {
+    ServiceError error = ServiceError
+        .builder()
+        .type(Type.DATA_ERROR)
+        .description(e.getMessage())
+        .build();
+    Result<?> failure = Result
+        .builder()
+        .resource(resource)
+        .error(error)
+        .responseCode(ResponseCode.ERROR.code())
+        .responseMessage(e.getRawMessage())
+        .build();
+    ResponseEntity<Result<?>> result = new ResponseEntity<Result<?>>(failure, HttpStatus.BAD_REQUEST);
+    return result;
+  }
+
+  private void logResult(Resource resource, Logger targetLogger, String action, ResponseEntity<Result<?>> result, Exception exc) {
+    if (result != null) {
+      if (exc == null) {
+        targetLogger.info("Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}", action, resource, result.getBody(), result.getStatusCode(), exc);
+      } else {
+        targetLogger.error("Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}", action, resource, result.getBody(), result.getStatusCode(), exc);
+      }
+    } else {
+      targetLogger.error("Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}", action, resource, result, "500", exc);
+    }
   }
 }

@@ -2,6 +2,8 @@ package com.soccerbuddy.service.registration;
 
 import static com.soccerbuddy.service.registration.TestUtils.asJsonString;
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -11,32 +13,43 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.soccerbuddy.data.DataSources;
+import com.soccerbuddy.exception.ServiceError;
 import com.soccerbuddy.model.RegisteringUser;
-import com.soccerbuddy.model.ServiceError;
 
 /**
  * Tests the RESTful APIs exposed by the {@link UserRegistrationService}.
  * 
  * @author mystarrocks
  */
+@PrepareForTest (DataSources.class)
 public class UserRegistrationServiceIT extends ApplicationITs {
   
-  @Autowired private WebApplicationContext context;
+  /** The mock web application context*/ @Autowired private WebApplicationContext context;
+  /** The power mock runner */ @Rule public PowerMockRule rule = new PowerMockRule();
   
   private MockMvc mvc;
   
   @Before
   @Override
-  public void init() {
+  public void init() throws Exception {
     super.init();
     mvc = webAppContextSetup(context).build();
+    
+    PowerMockito.mockStatic(DataSources.class);
+    when(DataSources.registerUser(anyObject())).thenReturn(null);
+    when(DataSources.unregisterUser(anyObject())).thenReturn(null);
   }
   
   /**

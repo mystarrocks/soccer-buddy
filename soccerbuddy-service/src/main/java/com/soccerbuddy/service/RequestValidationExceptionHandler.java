@@ -1,6 +1,6 @@
 package com.soccerbuddy.service;
 
-import static com.soccerbuddy.model.LogMarker.VALIDATION_FAILURE;
+import static com.soccerbuddy.exception.LogMarker.VALIDATION_FAILURE;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soccerbuddy.model.LogMarker;
-import com.soccerbuddy.model.ServiceError;
-import com.soccerbuddy.model.ServiceError.Type;
+import com.soccerbuddy.exception.LogMarker;
+import com.soccerbuddy.exception.ServiceError;
+import com.soccerbuddy.exception.ServiceError.Type;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Handles all the failed request validations resulting in
+ * Handles all the failed web service request validations resulting in
  * {@link MethodArgumentNotValidException}s.
  * 
  * @author mystarrocks
  * @since 1.0
- * @see https://jira.spring.io/browse/SPR-10961
+ * @see <a href="https://jira.spring.io/browse/SPR-10961">SPR-10961</a>
  */
 @ControllerAdvice (annotations = RestController.class)
 @Slf4j

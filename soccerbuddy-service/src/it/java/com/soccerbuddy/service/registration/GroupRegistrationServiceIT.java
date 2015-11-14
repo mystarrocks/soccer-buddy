@@ -18,9 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.soccerbuddy.exception.ServiceError;
 import com.soccerbuddy.model.RegisteringGroup;
 import com.soccerbuddy.model.RegisteringUser;
-import com.soccerbuddy.model.ServiceError;
 
 /**
  * Tests the RESTful APIs exposed by the {@link GroupRegistrationService}.
@@ -35,7 +35,7 @@ public class GroupRegistrationServiceIT extends ApplicationITs {
   
   @Before
   @Override
-  public void init() {
+  public void init() throws Exception {
     super.init();
     mvc = webAppContextSetup(context).build();
   }

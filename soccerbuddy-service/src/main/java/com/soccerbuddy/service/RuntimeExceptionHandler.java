@@ -1,6 +1,6 @@
 package com.soccerbuddy.service;
 
-import static com.soccerbuddy.model.LogMarker.*;
+import static com.soccerbuddy.exception.LogMarker.UNKNOWN_ERROR;
 
 import org.slf4j.Marker;
 import org.springframework.http.HttpStatus;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soccerbuddy.model.LogMarker;
-import com.soccerbuddy.model.ServiceError;
-import com.soccerbuddy.model.ServiceError.Type;
+import com.soccerbuddy.exception.LogMarker;
+import com.soccerbuddy.exception.ServiceError;
+import com.soccerbuddy.exception.ServiceError.Type;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,9 +21,13 @@ import lombok.extern.slf4j.Slf4j;
  * Handles all the failed request validations resulting in
  * {@link MethodArgumentNotValidException}s.
  * 
+ * <p>
+ * FIXME:  at this moment, this is unreachable and so useless thanks to {@link ServiceMethodHandler}
+ * advice. Get rid if it doesn't prove to be useful.
+ * 
  * @author mystarrocks
  * @since 1.0
- * @see https://jira.spring.io/browse/SPR-10961
+ * @see <a href="https://jira.spring.io/browse/SPR-10961">SPR-10961</a>
  */
 @ControllerAdvice (annotations = RestController.class)
 @Slf4j

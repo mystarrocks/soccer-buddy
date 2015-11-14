@@ -22,16 +22,27 @@ import com.soccerbuddy.service.Application;
 @WebAppConfiguration
 public class ApplicationITs {
   
+  /**
+   * Captures output from System.out and System.err.
+   */
   @Rule
   public OutputCapture outputCapture = new OutputCapture();
 
   private String profiles;
 
+  /**
+   * Sets the active profile.
+   * 
+   * @throws Exception if the setup could not be completed successfully 
+   */
   @Before
-  public void init() {
+  public void init() throws Exception {
     this.profiles = System.getProperty("spring.profiles.active");
   }
 
+  /**
+   * Preserves the active profiles on a system property.
+   */
   @After
   public void after() {
     if (this.profiles != null) {

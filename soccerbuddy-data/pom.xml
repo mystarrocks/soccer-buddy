@@ -14,11 +14,6 @@
   <name>soccerbuddy-data</name>
   <description>Manages the connectivity and the ORM with the back-end database components; acts a data access layer for the downstream systems.</description>
 
-  <properties>
-    <morphia.version>0.110</morphia.version>
-    <dynamodb.version>1.10.28</dynamodb.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -27,14 +22,17 @@
     </dependency>
 
     <dependency>
-      <groupId>org.mongodb.morphia</groupId>
-      <artifactId>morphia</artifactId>
-      <version>${morphia.version}</version>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-datastore-protobuf</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-dynamodb</artifactId>
-      <version>${dynamodb.version}</version>
+      <groupId>com.googlecode.objectify</groupId>
+      <artifactId>objectify</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
     </dependency>
   </dependencies>
 </project>
