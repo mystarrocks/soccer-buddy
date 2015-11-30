@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Data | soccerbuddy-data</title>
+		<title>Web services | soccerbuddy-service</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta http-equiv="content-language" content="en" />
@@ -34,7 +34,7 @@
 <link rel="author" href="https://plus.google.com/u/0/110755243539090436271"/>
 	</head>
 
-	<body class="page-surefire-report project-soccerbuddy-data" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-surefire-report project-soccerbuddy-service" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -64,7 +64,20 @@
 							<li class="dropdown active">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li class="active"><a href="" title="Unit test report">Unit test report</a></li>
+									<li class="dropdown-submenu disabled">
+										<a title="Unit test">Unit test</a>
+										<ul class="dropdown-menu">
+											<li ><a href="jacoco/index.html" title="Coverage">Coverage</a></li>
+											<li class="active"><a href="" title="Report">Report</a></li>
+										</ul>
+									</li>
+									<li class="dropdown-submenu disabled">
+										<a title="Integration Test">Integration Test</a>
+										<ul class="dropdown-menu">
+											<li ><a href="jacoco-it/index.html" title="Coverage">Coverage</a></li>
+											<li ><a href="failsafe-report.html" title="Report">Report</a></li>
+										</ul>
+									</li>
 								</ul>
 							</li>
 						</ul>
@@ -83,7 +96,7 @@
 		<div class="row" id="banner">
 			<div class="span12">
 				<div class="pull-left">
-					<div id="bannerLeft"><h1><span class="color-highlight">soccer-buddy</span>/soccerbuddy-data</h1></div>
+					<div id="bannerLeft"><h1><span class="color-highlight">soccer-buddy</span>/soccerbuddy-service</h1></div>
 					<p class="lead">Play your heart out!</p>
 				</div>
 				<div class="pull-right">
@@ -95,9 +108,9 @@
 			<ul class="breadcrumb">
 				<li><a href="../index.html" title="soccer-buddy">soccer-buddy</a></li>
 				<li class="divider">/</li>
-				<li><a href="index.html" title="soccerbuddy-data">soccerbuddy-data</a></li>
+				<li><a href="index.html" title="soccerbuddy-service">soccerbuddy-service</a></li>
 				<li class="divider">/</li>
-				<li>Data</li>
+				<li>Web services</li>
 			</ul>
 		</div>
 		<hr class="toc-separator" />
@@ -121,7 +134,7 @@
 								<!-- Repeat the item, otherwise it is not clickable as the dropdown root -->
 								<li><a href="#package_list" title="Package List">Package List</a></li>
 								<li class="divider"></li>
-								<li><a href="#comsoccerbuddydata" title="com.soccerbuddy.data">com.soccerbuddy.data</a></li>
+								<li><a href="#comsoccerbuddyservice" title="com.soccerbuddy.service">com.soccerbuddy.service</a></li>
 
 							</ul>
 						</li>
@@ -132,7 +145,8 @@
 								<!-- Repeat the item, otherwise it is not clickable as the dropdown root -->
 								<li><a href="#test_cases" title="Test Cases">Test Cases</a></li>
 								<li class="divider"></li>
-								<li><a href="#datasourcestest" title="DataSourcesTest">DataSourcesTest</a></li>
+								<li><a href="#requestvalidationexceptionhandlertest" title="RequestValidationExceptionHandlerTest">RequestValidationExceptionHandlerTest</a></li>
+								<li><a href="#runtimeexceptionhandlertest" title="RuntimeExceptionHandlerTest">RuntimeExceptionHandlerTest</a></li>
 
 							</ul>
 						</li>
@@ -187,12 +201,12 @@ function toggleDisplay(elementId) {
   </thead> 
   <tbody> 
    <tr class="b"> 
-    <td>4</td> 
+    <td>3</td> 
     <td>0</td> 
     <td>0</td> 
     <td>0</td> 
     <td>100%</td> 
-    <td>0.342</td> 
+    <td>5.38</td> 
    </tr> 
   </tbody> 
  </table> 
@@ -219,21 +233,21 @@ function toggleDisplay(elementId) {
   </thead> 
   <tbody> 
    <tr class="b"> 
-    <td><a href="#com.soccerbuddy.data">com.soccerbuddy.data</a></td> 
-    <td>4</td> 
+    <td><a href="#com.soccerbuddy.service">com.soccerbuddy.service</a></td> 
+    <td>3</td> 
     <td>0</td> 
     <td>0</td> 
     <td>0</td> 
     <td>100%</td> 
-    <td>0.342</td> 
+    <td>5.38</td> 
    </tr> 
   </tbody> 
  </table> 
  <br /> 
  <p>Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.</p> 
  <div class="section"> 
-  <h3 id="comsoccerbuddydata"><a name="com.soccerbuddy.data"></a>com.soccerbuddy.data</h3> 
-  <a name="com.soccerbuddy.data"></a> 
+  <h3 id="comsoccerbuddyservice"><a name="com.soccerbuddy.service"></a>com.soccerbuddy.service</h3> 
+  <a name="com.soccerbuddy.service"></a> 
   <table border="1" class="bodyTable table table-striped table-hover"> 
    <thead> 
     <tr class="a"> 
@@ -249,14 +263,24 @@ function toggleDisplay(elementId) {
    </thead> 
    <tbody> 
     <tr class="b"> 
-     <td><a href="#com.soccerbuddy.dataDataSourcesTest"><i class="icon-ok"></i></a></td> 
-     <td><a href="#com.soccerbuddy.dataDataSourcesTest">DataSourcesTest</a></td> 
-     <td>4</td> 
+     <td><a href="#com.soccerbuddy.serviceRequestValidationExceptionHandlerTest"><i class="icon-ok"></i></a></td> 
+     <td><a href="#com.soccerbuddy.serviceRequestValidationExceptionHandlerTest">RequestValidationExceptionHandlerTest</a></td> 
+     <td>2</td> 
      <td>0</td> 
      <td>0</td> 
      <td>0</td> 
      <td>100%</td> 
-     <td>0.342</td> 
+     <td>5.061</td> 
+    </tr> 
+    <tr class="a"> 
+     <td><a href="#com.soccerbuddy.serviceRuntimeExceptionHandlerTest"><i class="icon-ok"></i></a></td> 
+     <td><a href="#com.soccerbuddy.serviceRuntimeExceptionHandlerTest">RuntimeExceptionHandlerTest</a></td> 
+     <td>1</td> 
+     <td>0</td> 
+     <td>0</td> 
+     <td>0</td> 
+     <td>100%</td> 
+     <td>0.319</td> 
     </tr> 
    </tbody> 
   </table> 
@@ -268,29 +292,32 @@ function toggleDisplay(elementId) {
  <a name="Test_Cases"></a> 
  <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p> 
  <div class="section"> 
-  <h3 id="datasourcestest"><a name="DataSourcesTest"></a>DataSourcesTest</h3> 
-  <a name="com.soccerbuddy.dataDataSourcesTest"></a> 
+  <h3 id="requestvalidationexceptionhandlertest"><a name="RequestValidationExceptionHandlerTest"></a>RequestValidationExceptionHandlerTest</h3> 
+  <a name="com.soccerbuddy.serviceRequestValidationExceptionHandlerTest"></a> 
   <table border="1" class="bodyTable table table-striped table-hover"> 
    <tbody> 
     <tr class="a"> 
      <td><i class="icon-ok"></i></td> 
-     <td><a name="TC_com.soccerbuddy.data.DataSourcesTest.registerUser_ExistingUser_UnknownStatus"></a>registerUser_ExistingUser_UnknownStatus</td> 
-     <td>0.309</td> 
+     <td><a name="TC_com.soccerbuddy.service.RequestValidationExceptionHandlerTest.handleException"></a>handleException</td> 
+     <td>5.059</td> 
     </tr> 
     <tr class="b"> 
      <td><i class="icon-ok"></i></td> 
-     <td><a name="TC_com.soccerbuddy.data.DataSourcesTest.registerUser_ExistingUser_AlreadyActive"></a>registerUser_ExistingUser_AlreadyActive</td> 
-     <td>0.019</td> 
+     <td><a name="TC_com.soccerbuddy.service.RequestValidationExceptionHandlerTest.contract"></a>contract</td> 
+     <td>0.002</td> 
     </tr> 
+   </tbody> 
+  </table> 
+ </div> 
+ <div class="section"> 
+  <h3 id="runtimeexceptionhandlertest"><a name="RuntimeExceptionHandlerTest"></a>RuntimeExceptionHandlerTest</h3> 
+  <a name="com.soccerbuddy.serviceRuntimeExceptionHandlerTest"></a> 
+  <table border="1" class="bodyTable table table-striped table-hover"> 
+   <tbody> 
     <tr class="a"> 
      <td><i class="icon-ok"></i></td> 
-     <td><a name="TC_com.soccerbuddy.data.DataSourcesTest.registerUser_ExistingUser_Inactive"></a>registerUser_ExistingUser_Inactive</td> 
-     <td>0.009</td> 
-    </tr> 
-    <tr class="b"> 
-     <td><i class="icon-ok"></i></td> 
-     <td><a name="TC_com.soccerbuddy.data.DataSourcesTest.registerUser_NonExistingNewUser"></a>registerUser_NonExistingNewUser</td> 
-     <td>0.005</td> 
+     <td><a name="TC_com.soccerbuddy.service.RuntimeExceptionHandlerTest.handleException"></a>handleException</td> 
+     <td>0.319</td> 
     </tr> 
    </tbody> 
   </table> 
@@ -351,6 +378,9 @@ function toggleDisplay(elementId) {
 						</li>
 						<li >
 							<a href="testapidocs/index.html" title="Test JavaDocs">Test JavaDocs</a>
+						</li>
+						<li >
+							<a href="failsafe-report.html" title="Failsafe Report">Failsafe Report</a>
 						</li>
 						<li class="active">
 							<a href="#" title="Surefire Report">Surefire Report</a>
