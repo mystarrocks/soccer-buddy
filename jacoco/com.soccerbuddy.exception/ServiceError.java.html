@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ServiceError.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-model</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.exception</a> &gt; <span class="el_source">ServiceError.java</span></div><h1>ServiceError.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.exception;
+
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
+
+/**
+ * A web service error containing the complete context of
+ * a problem encountered during the servicing.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ */
+@JsonDeserialize
+<span class="pc" id="L23">@Builder</span>
+@Getter
+@Accessors (fluent = true)
+@FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+<span class="nc" id="L27">@ToString</span>
+public final class ServiceError implements Serializable {
+  private static final long serialVersionUID = -1338724449698535090L;
+  
+  /**
+   * A non-error.
+   */
+<span class="fc" id="L34">  public static final ServiceError NONE = </span>
+<span class="fc" id="L35">      ServiceError.builder()</span>
+<span class="fc" id="L36">        .type(ServiceError.Type.NONE)</span>
+<span class="fc" id="L37">        .description(&quot;&quot;).build();</span>
+  
+<span class="fc" id="L39">  @JsonProperty (value = &quot;type&quot;, required = true) Type type;</span>
+<span class="fc" id="L40">  @JsonProperty (value = &quot;description&quot;, required = true) String description;</span>
+  
+  /**
+   * An enumeration of all the service error types.
+   * 
+   * &lt;p&gt;
+   * The codes follow the convention of prefixing the most appropriate
+   * {@code HTTP} status code with a sequence number to tell codes corresponding
+   * to a {@code HTTP} status apart.
+   * 
+   * @author mystarrocks
+   * @since 1.0
+   */
+<span class="pc" id="L53">  @Getter</span>
+  @Accessors (fluent = true)
+  public static enum Type {
+    // Good ones
+    /**
+     * A non-error.
+     */
+<span class="fc" id="L60">    NONE(20001, &quot;&quot;),</span>
+    
+    // Bad request errors
+    /**
+     * The error type indicating a validation failure of a {@code HTTP} request.
+     */
+<span class="fc" id="L66">    VALIDATION_ERROR(40001, &quot;Validation failure error&quot;),</span>
+    
+    /**
+     * An error type indicating an invalid data for a certain operation.
+     */
+<span class="fc" id="L71">    DATA_ERROR(40002, &quot;Invalid data error&quot;),</span>
+    
+    // Server errors
+    /**
+     * An error type indicating that something went terribly wrong on the server.
+     */
+<span class="fc" id="L77">    UNKNOWN_SERVER_ERROR(50001, &quot;Unknown server error&quot;);</span>
+    
+<span class="fc" id="L79">    private int code;</span>
+<span class="fc" id="L80">    private String message;</span>
+    
+<span class="fc" id="L82">    Type(int code, String message) {</span>
+<span class="fc" id="L83">      this.code = code;</span>
+<span class="fc" id="L84">      this.message = message;</span>
+<span class="fc" id="L85">    }</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

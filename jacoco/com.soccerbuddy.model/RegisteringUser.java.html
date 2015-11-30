@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RegisteringUser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-model</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.model</a> &gt; <span class="el_source">RegisteringUser.java</span></div><h1>RegisteringUser.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.model;
+
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Index;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+/**
+ * An individual registering user.
+ * 
+ * &lt;p&gt;
+ * The user will attempt to register through the {@code /register/user}
+ * API. The registering user can optionally choose to create a group
+ * &lt;em&gt;and&lt;/em&gt; register themselves in which case they should 
+ * use the {@code /register/group} API.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ * @see RegisteringGroup
+ * @see Result
+ */
+@JsonDeserialize (builder = RegisteringUser.RegisteringUserBuilder.class)
+@Entity
+<span class="nc" id="L42">@NoArgsConstructor (access = AccessLevel.PRIVATE)</span>
+<span class="nc" id="L43">@AllArgsConstructor (access = AccessLevel.PRIVATE)</span>
+<span class="nc" id="L44">@Builder</span>
+@Accessors (fluent = true)
+<span class="nc" id="L46">@ToString</span>
+public class RegisteringUser implements Resource {
+  
+  @NotBlank
+  @JsonProperty (value = &quot;userName&quot;, required = true)
+  @Id
+<span class="nc" id="L52">  @Getter</span>
+  private String userName;
+  
+  @Email
+  @NotBlank
+  @Pattern (regexp = &quot;.+@gmail\\.com&quot;)
+  @JsonProperty (value = &quot;emailId&quot;, required = true)
+  @Index
+<span class="nc" id="L60">  @Getter</span>
+  private String emailId;
+  
+  @Pattern (regexp = &quot;\\(\\d{3}\\)-\\d{3}-\\d{4}&quot;)
+  @JsonProperty (value = &quot;phoneNumber&quot;, required = false)
+<span class="nc" id="L65">  @Getter</span>
+  private String phoneNumber;
+  
+  @JsonProperty (value = &quot;status&quot;, required = false)
+  @Index
+<span class="nc" id="L70">  @Getter @Setter</span>
+  private UserRegistrationStatus status;
+  
+  @JsonIgnore
+  @Ignore
+<span class="nc" id="L75">  @Getter @Setter @Accessors (fluent = false)</span>
+  private boolean audited;
+  
+  /**
+   * The builder utility that helps build instances of the [enclosing] type:
+   * {@link RegisteringUser}.
+   * 
+   * @author mystarrocks
+   * @since 1.0
+   */
+  @JsonPOJOBuilder (withPrefix = &quot;&quot;)
+  public static final class RegisteringUserBuilder {
+    // an empty builder is needed to specify a JSON builder prefix of &quot;&quot;
+    // would have been &quot;with&quot; otherwise
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

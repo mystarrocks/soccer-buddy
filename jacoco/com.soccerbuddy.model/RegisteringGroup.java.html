@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RegisteringGroup.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-model</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.model</a> &gt; <span class="el_source">RegisteringGroup.java</span></div><h1>RegisteringGroup.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.model;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+
+/**
+ * A registering group.
+ * 
+ * &lt;p&gt;
+ * The person attempting to register a group may or may not be registered
+ * yet. If they are not registered yet, the person will be registered first
+ * and then the group will be created with he/she as the administrator.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ * @see RegisteringUser
+ */
+@JsonDeserialize (builder = RegisteringGroup.RegisteringGroupBuilder.class)
+<span class="nc" id="L34">@Builder</span>
+@FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+<span class="nc" id="L36">@ToString</span>
+@Accessors (fluent = true)
+public class RegisteringGroup implements Resource {
+  
+  @NotBlank
+  @JsonProperty (value = &quot;groupName&quot;, required = true)
+<span class="nc" id="L42">  @Getter</span>
+  String groupName;
+  
+  @NotNull
+  @JsonProperty (value = &quot;admin&quot;, required = true)
+<span class="nc" id="L47">  @Getter</span>
+  RegisteringUser admin;
+  
+  @JsonProperty (value = &quot;existingUser&quot;, required = false)
+<span class="nc" id="L51">  @Getter</span>
+  boolean existingUser;
+  
+  @JsonIgnore
+<span class="nc" id="L55">  @NonFinal @Getter @Setter @Accessors (fluent = false)</span>
+  boolean audited;
+  
+  @JsonPOJOBuilder (withPrefix = &quot;&quot;)
+  public static final class RegisteringGroupBuilder {
+    // an empty builder is needed to specify a JSON builder prefix of &quot;&quot;
+    // would have been &quot;with&quot; otherwise
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

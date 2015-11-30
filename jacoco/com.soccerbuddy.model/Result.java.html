@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Result.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-model</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.model</a> &gt; <span class="el_source">Result.java</span></div><h1>Result.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.model;
+
+import static com.soccerbuddy.model.ResponseCode.SUCCESS;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.soccerbuddy.exception.ServiceError;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
+
+/**
+ * The result of an action performed against a web service.
+ * 
+ * &lt;p&gt;
+ * Includes a result code and a message, the resource that
+ * was requested and optionally an error code and a message
+ * that will help the clients decide on the next action in
+ * case the resource could not be retrieved (or any of the
+ * {@code CRUD} actions for that matter) successfully.
+ * 
+ * @param &lt;R&gt;  the resource requested by the client
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ */
+@JsonDeserialize (builder = Result.ResultBuilder.class)
+<span class="pc" id="L33">@Builder</span>
+@FieldDefaults (level = AccessLevel.PRIVATE, makeFinal = true)
+@Getter
+@Accessors (fluent = true)
+<span class="nc" id="L37">@ToString</span>
+public final class Result&lt;R extends Resource&gt; {
+<span class="fc" id="L39">  @JsonProperty (value = &quot;responseCode&quot;, required = true) int responseCode;</span>
+<span class="fc" id="L40">  @JsonProperty (value = &quot;responseMessage&quot;, required = true) String responseMessage;</span>
+<span class="fc" id="L41">  @JsonProperty (value = &quot;error&quot;, required = true) ServiceError error;</span>
+<span class="fc" id="L42">  @JsonProperty (value = &quot;resource&quot;, required = true) R resource;</span>
+  
+  /**
+   * Returns a result indicating the success of the operation that
+   * was attempted on the resource: &lt;tt&gt;resource&lt;/tt&gt;.
+   * 
+   * @param resource  the resource the action was attempted on
+   * @return a result indicating the success of the operation that
+   * was attempted on the resource: &lt;tt&gt;resource&lt;/tt&gt;
+   */
+  public static final &lt;R extends Resource&gt; Result&lt;R&gt; success(R resource) {
+    return
+<span class="fc" id="L54">        Result.&lt;R&gt;builder()</span>
+<span class="fc" id="L55">          .responseCode(SUCCESS.code())</span>
+<span class="fc" id="L56">          .responseMessage(&quot;The action on the resource was successful&quot;)</span>
+<span class="fc" id="L57">          .error(ServiceError.NONE)</span>
+<span class="fc" id="L58">          .resource(resource).build();</span>
+  }
+  
+  @JsonPOJOBuilder (withPrefix = &quot;&quot;)
+  public static final class ResultBuilder&lt;R extends Resource&gt; {
+    // an empty builder is needed to specify a JSON builder prefix of &quot;&quot;
+    // would have been &quot;with&quot;  otherwise
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
