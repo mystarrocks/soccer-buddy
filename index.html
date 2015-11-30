@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Model</title>
+		<title>Data</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta http-equiv="content-language" content="en" />
@@ -34,7 +34,7 @@
 <link rel="author" href="https://plus.google.com/u/0/110755243539090436271"/>
 	</head>
 
-	<body class="page-index project-soccerbuddy-model" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-index project-soccerbuddy-data" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -83,7 +83,7 @@
 		<div class="row" id="banner">
 			<div class="span12">
 				<div class="pull-left">
-					<div id="bannerLeft"><h1><span class="color-highlight">soccer-buddy</span>/soccerbuddy-model</h1></div>
+					<div id="bannerLeft"><h1><span class="color-highlight">soccer-buddy</span>/soccerbuddy-data</h1></div>
 					<p class="lead">Play your heart out!</p>
 				</div>
 				<div class="pull-right">
@@ -95,9 +95,9 @@
 			<ul class="breadcrumb">
 				<li><a href="../index.html" title="soccer-buddy">soccer-buddy</a></li>
 				<li class="divider">/</li>
-				<li><a href="" title="soccerbuddy-model">soccerbuddy-model</a></li>
+				<li><a href="" title="soccerbuddy-data">soccerbuddy-data</a></li>
 				<li class="divider">/</li>
-				<li>Model</li>
+				<li>Data</li>
 			</ul>
 		</div>
 	</header>
@@ -106,41 +106,9 @@
 	<div class="row columns columns1">
 		<div class="span12">
 			<h2><a name="Overview"></a>Overview</h2>
-<p>A collection of all the model, <tt>ORM</tt> and other utility types. Here’s a rough list of such type groups: </p>
-<div class="section"> 
- <div class="section">  
- </div>   
-</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
-			<h4><a name="Annotation"></a>Annotation</h4>
-<p>Contains all the custom annotations used by the <tt>soccerbuddy-service</tt> and <tt>soccerbuddy-data</tt> modules. </p>
-<div class="section">  
-</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
-			<h4><a name="Exception"></a>Exception</h4>
-<p>Contains all the custom exceptions used by the <tt>soccerbuddy-service</tt> and <tt>soccerbuddy-data</tt> modules.</p>
-<div class="section">  
-</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
-			<h4><a name="Model"></a>Model</h4>
-<p>Contains all the web service and <tt>ORM</tt> model types.</p>
-<div class="section">   
-</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
-			<h4><a name="Utilities"></a>Utilities</h4>
-<p>Contains the other miscellaneous utility classes used by others.</p>
+<p>A collection of all the data store related utility classes that help the web service implementations perform <tt>CRUD</tt> operations on the data store. </p>
+<p>Each web service has an associated data store utility class typically of the name <tt>{WebServiceFunctionality}DataSource.java</tt> that’s usually hidden to the web service. The web service implementations are encouraged to instead use the <tt>DataSources.java</tt>, a convenience static utility method twin of such data source classes, to obtain the right implementation of the data source class and perform <tt>CRUD</tt> operations.</p>
+<p>The underlying database is the <a class="externalLink" href="https://cloud.google.com/datastore/"><tt>Google Datastore</tt></a>, so this module uses the <tt>Datastore</tt> API in combination with <a class="externalLink" href="https://github.com/objectify/objectify"><tt>Objectify</tt></a> for simplicity and easy of use.</p>
 <p>Read the package description for more info <a href="apidocs/index.html">here</a>.</p>
 		</div>
 	</div>
