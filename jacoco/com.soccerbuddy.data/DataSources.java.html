@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DataSources.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-data</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.data</a> &gt; <span class="el_source">DataSources.java</span></div><h1>DataSources.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.data;
+
+import java.util.Optional;
+
+import com.google.api.services.datastore.DatastoreV1.Entity;
+import com.soccerbuddy.model.RegisteringUser;
+import com.soccerbuddy.model.UserRegistrationStatus;
+
+/**
+ * The static utility method twin of the {@code DataSource}.
+ * 
+ * &lt;p&gt;
+ * This effectively final class acts as a factory of data source instances that help
+ * the client obtain the right data source implementation based on
+ * the model object type it deals with.
+ * 
+ * &lt;p&gt;
+ * At this time, the only supported entity object type is {@link Entity},
+ * the default entity type for all the model object types.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ * @see DataSource
+ */
+public class DataSources {
+  
+<span class="fc" id="L27">  private static final DataSource&lt;RegisteringUser, String&gt; USER_REGISTRATION_DATA_SOURCE = UserRegistrationDataSource.newInstance();</span>
+  
+  /**
+   * Prevent subclassing.
+   */
+<span class="nc" id="L32">  private DataSources() {}</span>
+  
+  /**
+   * Registers the given user by inserting/updating a new/existing entity into/in the data store.
+   * 
+   * &lt;p&gt;
+   * This checks for presence of the user in the data store prior to inserting a new one.
+   * If the search does find a user (with the same email as the given), an attempt to update
+   * will be made to re-register depending on the current status of the user entity in the
+   * data store, so this method doesn't always involve inserts.
+   * 
+   * &lt;p&gt;
+   * This overwrites any status value set for the registering user to correspond
+   * to that of a successful registration, so it's probably best left unset by the client.
+   * 
+   * @param user  the user to be registered
+   * @return the registered user entity
+   * @throws DataStoreException if a user with the given email already exists in the data store
+   * that cannot be re-registered due to the current status
+   */
+  public static RegisteringUser registerUser(RegisteringUser user) throws DataStoreException {
+<span class="fc" id="L53">    RegisteringUser savedUser = null;</span>
+<span class="fc" id="L54">    String emailId = user.emailId();</span>
+    
+<span class="fc" id="L56">    Optional&lt;RegisteringUser&gt; dsUser = registrationDataSource().findOne(emailId);</span>
+    
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    if (dsUser.isPresent()) {</span>
+<span class="fc" id="L59">      savedUser = handleRegistrationForAnExistingUser(dsUser.get());</span>
+    } else {
+<span class="fc" id="L61">      user.status(UserRegistrationStatus.ACTIVE);</span>
+<span class="fc" id="L62">      savedUser = registrationDataSource().insertNew(user);</span>
+    }
+    
+<span class="fc" id="L65">    return savedUser;</span>
+  }
+
+  private static RegisteringUser handleRegistrationForAnExistingUser(RegisteringUser dsUser) throws DataStoreException {
+<span class="fc" id="L69">    RegisteringUser savedUser = null;</span>
+    
+<span class="fc" id="L71">    UserRegistrationStatus status = Optional</span>
+<span class="fc" id="L72">        .ofNullable(dsUser.status())</span>
+<span class="fc" id="L73">        .orElse(UserRegistrationStatus.UNKNOWN);</span>
+<span class="pc bpc" id="L74" title="1 of 3 branches missed.">    switch (status) {</span>
+    case ACTIVE:
+    case ACTIVE_AGAIN:
+<span class="fc" id="L77">      throw new DataStoreException(&quot;The user is already registered and active.&quot;)</span>
+<span class="fc" id="L78">          .addContextValue(&quot;Username&quot;, dsUser.userName())</span>
+<span class="fc" id="L79">          .addContextValue(&quot;Email id&quot;, dsUser.emailId());</span>
+    case INACTIVE:
+    case INACTIVE_AGAIN:
+    case UNKNOWN: /* Unlikely that such a status would ever exist in the data store */
+<span class="fc" id="L83">      dsUser.status(UserRegistrationStatus.ACTIVE_AGAIN);</span>
+<span class="fc" id="L84">      savedUser = registrationDataSource().insertNew(dsUser);</span>
+      break;
+    }
+<span class="fc" id="L87">    return savedUser;</span>
+  }
+  
+  /**
+   * Unregisters the given user by updating the existing entity in the data store.
+   * 
+   * &lt;p&gt;
+   * This checks for presence of the user in the data store prior to updating it.
+   * If the search does find a user (with the same email as the given), an attempt to update
+   * will be made to un-register depending on the current status of the user entity in the
+   * data store, so this method doesn't always involve updates. If, however, a user entity
+   * was not found in the data store (with the given email id), an exception will be thrown
+   * appropriately.
+   * 
+   * &lt;p&gt;
+   * This overwrites any status value set for the unregistering user to correspond
+   * to that of a successful unregistration, so it's probably best left unset by the client.
+   * 
+   * @param user  the user to be unregistered
+   * @return the unregistered user entity
+   * @throws DataStoreException if a user with the given email does not exist in the data store
+   * or if it exists and cannot be unregistered [again, say]
+   */
+  public static RegisteringUser unregisterUser(RegisteringUser user) throws DataStoreException {
+<span class="nc" id="L111">    RegisteringUser savedUser = null;</span>
+<span class="nc" id="L112">    String emailId = user.emailId();</span>
+    
+<span class="nc" id="L114">    Optional&lt;RegisteringUser&gt; dsUser = registrationDataSource().findOne(emailId);</span>
+    
+<span class="nc bnc" id="L116" title="All 2 branches missed.">    if (dsUser.isPresent()) {</span>
+<span class="nc" id="L117">      savedUser = handleUnregistrationForAnExistingUser(dsUser.get());</span>
+    } else {
+<span class="nc" id="L119">      throw new DataStoreException(&quot;No registered user found with the given details.&quot;)</span>
+<span class="nc" id="L120">          .addContextValue(&quot;Username&quot;, user.userName())</span>
+<span class="nc" id="L121">          .addContextValue(&quot;Email id&quot;, user.emailId());</span>
+    }
+    
+<span class="nc" id="L124">    return savedUser;</span>
+  }
+  
+  private static RegisteringUser handleUnregistrationForAnExistingUser(RegisteringUser dsUser) throws DataStoreException {
+<span class="nc" id="L128">    RegisteringUser savedUser = null;</span>
+    
+<span class="nc" id="L130">    UserRegistrationStatus status = Optional</span>
+<span class="nc" id="L131">        .ofNullable(dsUser.status())</span>
+<span class="nc" id="L132">        .orElse(UserRegistrationStatus.UNKNOWN);</span>
+<span class="nc bnc" id="L133" title="All 5 branches missed.">    switch (status) {</span>
+    case ACTIVE:
+<span class="nc" id="L135">      dsUser.status(UserRegistrationStatus.INACTIVE);</span>
+<span class="nc" id="L136">      savedUser = registrationDataSource().updateExisting(dsUser);</span>
+<span class="nc" id="L137">      break;</span>
+    case ACTIVE_AGAIN:
+<span class="nc" id="L139">      dsUser.status(UserRegistrationStatus.INACTIVE_AGAIN);</span>
+<span class="nc" id="L140">      savedUser = registrationDataSource().updateExisting(dsUser);</span>
+<span class="nc" id="L141">      break;</span>
+    case UNKNOWN: /* Unlikely that such a status would ever exist in the data store */
+<span class="nc" id="L143">      dsUser.status(UserRegistrationStatus.INACTIVE);</span>
+<span class="nc" id="L144">      savedUser = registrationDataSource().updateExisting(dsUser);</span>
+<span class="nc" id="L145">      break;</span>
+    case INACTIVE:
+    case INACTIVE_AGAIN:
+<span class="nc" id="L148">      throw new DataStoreException(&quot;No registered user found with the given details.&quot;)</span>
+<span class="nc" id="L149">          .addContextValue(&quot;Username&quot;, dsUser.userName())</span>
+<span class="nc" id="L150">          .addContextValue(&quot;Email id&quot;, dsUser.emailId());</span>
+    }
+<span class="nc" id="L152">    return savedUser;</span>
+  }
+
+  private static DataSource&lt;RegisteringUser, String&gt; registrationDataSource() {
+<span class="nc" id="L156">    return USER_REGISTRATION_DATA_SOURCE;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

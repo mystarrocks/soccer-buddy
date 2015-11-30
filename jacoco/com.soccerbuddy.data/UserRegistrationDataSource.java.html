@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserRegistrationDataSource.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-data</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.data</a> &gt; <span class="el_source">UserRegistrationDataSource.java</span></div><h1>UserRegistrationDataSource.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.data;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.util.Optional;
+
+import com.googlecode.objectify.Key;
+import com.soccerbuddy.model.RegisteringUser;
+
+/**
+ * The data source that helps the application persist/query
+ * user registration related information.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ * @see DataSources
+ */
+<span class="fc" id="L18">class UserRegistrationDataSource implements DataSource&lt;RegisteringUser, String&gt; {</span>
+  
+  /**
+   * Returns a new instance of this data source.
+   * 
+   * @return a new instance of this data source
+   */
+  static UserRegistrationDataSource newInstance() {
+<span class="fc" id="L26">    return new UserRegistrationDataSource();</span>
+  }
+  
+  @Override
+  public RegisteringUser insertNew(RegisteringUser user) {
+<span class="nc" id="L31">    ofy()</span>
+<span class="nc" id="L32">        .save()</span>
+<span class="nc" id="L33">        .entity(user)</span>
+<span class="nc" id="L34">        .now();</span>
+<span class="nc" id="L35">    return user;</span>
+  }
+  
+  @Override
+  public RegisteringUser updateExisting(RegisteringUser user) {
+<span class="nc" id="L40">    ofy()</span>
+<span class="nc" id="L41">        .save()</span>
+<span class="nc" id="L42">        .entity(user)</span>
+<span class="nc" id="L43">        .now();</span>
+<span class="nc" id="L44">    return user;</span>
+  }
+
+  @Override
+  public void deleteExisting(RegisteringUser e) {
+<span class="nc" id="L49">    throw new UnsupportedOperationException(&quot;Deletion of [registered] users is not allowed;&quot;</span>
+        + &quot; If you want to unsubscribe the user, update the registration status of the user.&quot;);
+  }
+  
+  @Override
+  public Optional&lt;RegisteringUser&gt; findOne(String key) {
+    return Optional
+<span class="nc" id="L56">        .ofNullable(ofy()</span>
+<span class="nc" id="L57">            .load()</span>
+<span class="nc" id="L58">            .type(RegisteringUser.class)</span>
+<span class="nc" id="L59">            .id(key)</span>
+<span class="nc" id="L60">            .now());</span>
+  }
+  
+  @Override
+  public Optional&lt;RegisteringUser&gt; findOne(Key&lt;String&gt; key) {
+<span class="nc" id="L65">    return null;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
