@@ -1,1 +1,3 @@
-com.soccerbuddy.data
+com.soccerbuddy.service
+com.soccerbuddy.service.profile
+com.soccerbuddy.service.registration

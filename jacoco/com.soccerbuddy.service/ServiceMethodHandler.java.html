@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ServiceMethodHandler.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-service</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.service</a> &gt; <span class="el_source">ServiceMethodHandler.java</span></div><h1>ServiceMethodHandler.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.service;
+
+import static com.soccerbuddy.util.LogMarker.TIMES;
+
+import java.util.UUID;
+
+import org.apache.logging.log4j.ThreadContext;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import com.soccerbuddy.annotation.ServiceMethod;
+import com.soccerbuddy.data.DataStoreException;
+import com.soccerbuddy.util.LogMarker;
+import com.soccerbuddy.exception.ServiceError;
+import com.soccerbuddy.exception.ServiceError.Type;
+import com.soccerbuddy.model.Resource;
+import com.soccerbuddy.model.ResponseCode;
+import com.soccerbuddy.model.Result;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * The {@code AOP} utility that point cuts the web service
+ * methods and advises them.
+ * 
+ * &lt;p&gt;
+ * Intercepts and advises all the methods annotated with {@code @ServiceMethod}.
+ * Here's a definitive list of concerns the use of this annotation will help deal with:
+ * &lt;ul&gt;
+ *   &lt;li&gt;logging (logging of the method execution event with the result
+ *   of execution)&lt;/li&gt;
+ *   &lt;li&gt;profiling (logging the start and end times of the methods to help measure
+ *   the performance of the various method calls involved)&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ * @see ServiceMethod
+ */
+@Aspect
+@Component
+<span class="nc" id="L49">@Slf4j</span>
+<span class="nc" id="L50">public class ServiceMethodHandler {</span>
+  
+  /**
+   * Intercepts and advises all the web service methods annotated with {@code @ServiceMethod}.
+   * 
+   * &lt;p&gt;
+   * Here's a definitive list of concerns the use of this annotation will help deal with:
+   * &lt;ul&gt;
+   *   &lt;li&gt;logging (logging of the method execution event with the result 
+   *   of execution)&lt;/li&gt;
+   *   &lt;li&gt;profiling (logging the start and end times of the methods to help measure 
+   *   the performance of the various method calls involved)&lt;/li&gt;
+   * &lt;/ul&gt;
+   * 
+   * @param joinPoint  the join point to proceed execution of target method
+   * @param resource  the resource being acted on by the web service method
+   * @param serviceMethod  the service method annotation with the advising preferences
+   * @return the original response returned by the target method to the caller
+   * @throws Throwable if the target method threw one
+   */
+  @SuppressWarnings(&quot;unchecked&quot;)
+  @Around (&quot;execution(public org.springframework.http.ResponseEntity *(..))&quot;
+      + &quot;&amp;&amp; args(resource)&quot;
+      + &quot;&amp;&amp; @annotation (serviceMethod)&quot;)
+  public ResponseEntity&lt;?&gt; auditServiceMethod(ProceedingJoinPoint joinPoint, Resource resource, ServiceMethod serviceMethod) throws Throwable {
+<span class="nc" id="L75">    ThreadContext.push(UUID.randomUUID().toString());</span>
+    
+<span class="nc" id="L77">    LOGGER.debug(&quot;Intercepting method: {}&quot;, joinPoint.getSignature().getName());</span>
+    
+<span class="nc" id="L79">    Logger targetLogger = LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringType());</span>
+<span class="nc" id="L80">    Logger timingLogger = LoggerFactory.getLogger(&quot;timer&quot;);</span>
+    
+<span class="nc" id="L82">    String action = serviceMethod.action();</span>
+<span class="nc" id="L83">    Marker failureMarker = LogMarker.asSlf4jMarker(serviceMethod.failureMarker());</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">    if (serviceMethod.customFailureMarker() != null &amp;&amp; ! serviceMethod.customFailureMarker().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L85">      failureMarker = LogMarker.asSlf4jMarker(serviceMethod.customFailureMarker());</span>
+    }
+    
+<span class="nc" id="L88">    long startTime = System.nanoTime();</span>
+<span class="nc" id="L89">    ResponseEntity&lt;Result&lt;?&gt;&gt; result = null;</span>
+<span class="nc" id="L90">    Exception exc = null;</span>
+    
+    try {
+<span class="nc" id="L93">      result = (ResponseEntity&lt;Result&lt;?&gt;&gt;) joinPoint.proceed(joinPoint.getArgs());</span>
+<span class="nc" id="L94">    } catch (DataStoreException e) {</span>
+<span class="nc" id="L95">      exc = e;</span>
+<span class="nc" id="L96">      targetLogger.error(failureMarker, action, exc);</span>
+<span class="nc" id="L97">      result = handleDataStoreException(resource, e);</span>
+<span class="nc" id="L98">    } catch (Exception e) {</span>
+<span class="nc" id="L99">      exc = e;</span>
+<span class="nc" id="L100">      targetLogger.error(failureMarker, action, exc);</span>
+    } finally {
+<span class="nc" id="L102">      long endTime = System.nanoTime();</span>
+<span class="nc" id="L103">      logResult(resource, targetLogger, action, result, exc);</span>
+      
+<span class="nc" id="L105">      long timeTaken = endTime - startTime;</span>
+<span class="nc" id="L106">      timingLogger.info(LogMarker.asSlf4jMarker(TIMES), Long.toString(timeTaken));</span>
+      
+<span class="nc" id="L108">      resource.setAudited(true);</span>
+<span class="nc" id="L109">    }</span>
+    
+<span class="nc" id="L111">    ThreadContext.pop();</span>
+<span class="nc" id="L112">    return result;</span>
+  }
+  
+  private ResponseEntity&lt;Result&lt;?&gt;&gt; handleDataStoreException(Resource resource, DataStoreException e) {
+    ServiceError error = ServiceError
+<span class="nc" id="L117">        .builder()</span>
+<span class="nc" id="L118">        .type(Type.DATA_ERROR)</span>
+<span class="nc" id="L119">        .description(e.getMessage())</span>
+<span class="nc" id="L120">        .build();</span>
+    Result&lt;?&gt; failure = Result
+<span class="nc" id="L122">        .builder()</span>
+<span class="nc" id="L123">        .resource(resource)</span>
+<span class="nc" id="L124">        .error(error)</span>
+<span class="nc" id="L125">        .responseCode(ResponseCode.ERROR.code())</span>
+<span class="nc" id="L126">        .responseMessage(e.getRawMessage())</span>
+<span class="nc" id="L127">        .build();</span>
+<span class="nc" id="L128">    ResponseEntity&lt;Result&lt;?&gt;&gt; result = new ResponseEntity&lt;Result&lt;?&gt;&gt;(failure, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L129">    return result;</span>
+  }
+
+  private void logResult(Resource resource, Logger targetLogger, String action, ResponseEntity&lt;Result&lt;?&gt;&gt; result, Exception exc) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">    if (result != null) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">      if (exc == null) {</span>
+<span class="nc" id="L135">        targetLogger.info(&quot;Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}&quot;, action, resource, result.getBody(), result.getStatusCode(), exc);</span>
+      } else {
+<span class="nc" id="L137">        targetLogger.error(&quot;Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}&quot;, action, resource, result.getBody(), result.getStatusCode(), exc);</span>
+      }
+    } else {
+<span class="nc" id="L140">      targetLogger.error(&quot;Action: {} | Resource: {} | Result: {} | Status: {} | Exception: {}&quot;, action, resource, result, &quot;500&quot;, exc);</span>
+    }
+<span class="nc" id="L142">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

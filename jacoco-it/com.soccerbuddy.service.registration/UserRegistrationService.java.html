@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserRegistrationService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-service</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.service.registration</a> &gt; <span class="el_source">UserRegistrationService.java</span></div><h1>UserRegistrationService.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.service.registration;
+
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.soccerbuddy.annotation.ServiceMethod;
+import com.soccerbuddy.data.DataSources;
+import com.soccerbuddy.data.DataStoreException;
+import com.soccerbuddy.model.RegisteringUser;
+import com.soccerbuddy.model.Result;
+
+/**
+ * The web service that handles the user registration and unregistration activities.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ */
+@RestController
+@RequestMapping (&quot;/register&quot;)
+<span class="fc" id="L28">class UserRegistrationService implements RegistrationService&lt;RegisteringUser&gt; {</span>
+  
+  /**
+   * Registers the given user by persisting them in the user data store.
+   * 
+   * @param registeringUser  the user attempting to register
+   * @return the result of registration
+   * @throws DataStoreException if an invalid set of data was passed in to perform registration
+   * (like, say, an already registered and active user)
+   */
+  @Override
+  @RequestMapping (value = &quot;/user&quot;, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = &quot;User registration&quot;, customFailureMarker = &quot;USER_REGISTRATION_FAILURE&quot;)
+  public @ResponseBody ResponseEntity&lt;Result&lt;RegisteringUser&gt;&gt; register(@Valid @RequestBody RegisteringUser registeringUser) throws DataStoreException {
+<span class="fc" id="L42">    DataSources.registerUser(registeringUser);</span>
+<span class="fc" id="L43">    Result&lt;RegisteringUser&gt; result = Result.success(registeringUser);</span>
+<span class="fc" id="L44">    return new ResponseEntity&lt;Result&lt;RegisteringUser&gt;&gt;(result, HttpStatus.OK);</span>
+  }
+
+  /**
+   * Unregisters the given user by updating the status of the registration in the 
+   * user data store.
+   * 
+   * @param unregisteringUser  the entity attempting to unregister
+   * @return the result of unregistration
+   * @throws DataStoreException if an invalid set of data was passed in to perform unregistration
+   * (like, say, an already unregistered and inactive user)
+   */
+  @Override
+  @RequestMapping (value = &quot;/user&quot;, method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = &quot;User unregistration&quot;, customFailureMarker = &quot;USER_UNREGISTRATION_FAILURE&quot;)
+  public @ResponseBody ResponseEntity&lt;Result&lt;RegisteringUser&gt;&gt; unregister(@Valid @RequestBody RegisteringUser unregisteringUser) throws DataStoreException {
+<span class="fc" id="L60">    DataSources.unregisterUser(unregisteringUser);</span>
+<span class="fc" id="L61">    Result&lt;RegisteringUser&gt; result = Result.success(unregisteringUser);</span>
+<span class="fc" id="L62">    return new ResponseEntity&lt;Result&lt;RegisteringUser&gt;&gt;(result, HttpStatus.OK);</span>
+  }
+
+  /**
+   * Re-registers the given user by updating the status of the previous registration
+   * in the user data store.
+   * 
+   * @param reregisteringUser  the user attempting to reregister
+   * @return the result of reregistration
+   * @throws DataStoreException if an invalid set of data was passed in to perform reregistration
+   * (like, say, an already registered and active user)
+   */
+  @Override
+  @RequestMapping (value = &quot;/user&quot;, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = &quot;User reregistration&quot;, customFailureMarker = &quot;USER_REREGISTRATION_FAILURE&quot;)
+  public @ResponseBody ResponseEntity&lt;Result&lt;RegisteringUser&gt;&gt; reregister(@Valid @RequestBody RegisteringUser reregisteringUser) throws DataStoreException {
+<span class="fc" id="L78">    DataSources.registerUser(reregisteringUser);</span>
+<span class="fc" id="L79">    Result&lt;RegisteringUser&gt; result = Result.success(reregisteringUser);</span>
+<span class="fc" id="L80">    return new ResponseEntity&lt;Result&lt;RegisteringUser&gt;&gt;(result, HttpStatus.OK);</span>
+  }
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

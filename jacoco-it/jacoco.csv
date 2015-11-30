@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+soccerbuddy-service,com.soccerbuddy.service.registration,GroupRegistrationService,0,54,0,2,0,13,0,6,0,5
+soccerbuddy-service,com.soccerbuddy.service.registration,UserRegistrationService,0,39,0,0,0,10,0,4,0,4
+soccerbuddy-service,com.soccerbuddy.service,ServiceMethodHandler,118,171,3,5,17,30,4,5,1,4
+soccerbuddy-service,com.soccerbuddy.service,RuntimeExceptionHandler,26,10,0,0,5,3,1,2,1,2
+soccerbuddy-service,com.soccerbuddy.service,RequestValidationExceptionHandler,0,41,0,0,0,13,0,3,0,3
+soccerbuddy-service,com.soccerbuddy.service,Application,5,20,0,0,2,6,1,3,1,3

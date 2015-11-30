@@ -1,5 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-soccerbuddy-data,com.soccerbuddy.data,UserRegistrationDataSource,32,7,0,0,17,2,5,2,5,2
-soccerbuddy-data,com.soccerbuddy.data,DataSources,97,70,8,4,29,20,10,5,4,3
-soccerbuddy-data,com.soccerbuddy.data,DataSources.new Object() {...},5,35,0,0,0,1,0,1,0,1
-soccerbuddy-data,com.soccerbuddy.data,DataStoreException,9,10,0,0,4,3,2,2,2,2
+soccerbuddy-service,com.soccerbuddy.service.registration,GroupRegistrationService,54,0,2,0,13,0,6,0,5,0
+soccerbuddy-service,com.soccerbuddy.service.registration,UserRegistrationService,39,0,0,0,10,0,4,0,4,0
+soccerbuddy-service,com.soccerbuddy.service,ServiceMethodHandler,289,0,8,0,47,0,9,0,5,0
+soccerbuddy-service,com.soccerbuddy.service,RuntimeExceptionHandler,0,36,0,0,0,8,0,3,0,3
+soccerbuddy-service,com.soccerbuddy.service,RequestValidationExceptionHandler,0,41,0,0,0,13,0,3,0,3
+soccerbuddy-service,com.soccerbuddy.service,Application,25,0,0,0,8,0,4,0,4,0

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>GroupRegistrationService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">soccerbuddy-service</a> &gt; <a href="index.source.html" class="el_package">com.soccerbuddy.service.registration</a> &gt; <span class="el_source">GroupRegistrationService.java</span></div><h1>GroupRegistrationService.java</h1><pre class="source lang-java linenums">package com.soccerbuddy.service.registration;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.soccerbuddy.annotation.ServiceMethod;
+import com.soccerbuddy.data.DataStoreException;
+import com.soccerbuddy.model.RegisteringGroup;
+import com.soccerbuddy.model.RegisteringUser;
+import com.soccerbuddy.model.Result;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * The controller that handles group registration and un-registration activities.
+ * 
+ * @author mystarrocks
+ * @since 1.0
+ */
+@RestController
+@RequestMapping (&quot;/register&quot;)
+<span class="nc" id="L31">@Slf4j</span>
+<span class="nc" id="L32">class GroupRegistrationService implements RegistrationService&lt;RegisteringGroup&gt; {</span>
+  
+  @Autowired private UserRegistrationService userRegistrar;
+  
+  /**
+   * Registers the given group by persisting them in the group data store.
+   * 
+   * &lt;p&gt;
+   * If the user attempting to register is not registered with yet, they will be registered first
+   * and should the registration go through successfully, the group will be registered.
+   * 
+   * @param registeringGroup  the registering group details
+   * @return the result of registration
+   * @throws DataStoreException if an invalid set of data was passed in to perform registration
+   * (like, say, an already registered and active group) 
+   */
+  @Override
+  @RequestMapping (value = &quot;/group&quot;, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = &quot;Group registration&quot;, customFailureMarker = &quot;GROUP_REGISTRATION_FAILURE&quot;)
+  public @ResponseBody ResponseEntity&lt;Result&lt;RegisteringGroup&gt;&gt; register(@Valid @RequestBody RegisteringGroup registeringGroup) throws DataStoreException {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    if (registeringGroup.existingUser()) {</span>
+      // persist the registered group
+    } else {
+<span class="nc" id="L55">      RegisteringUser admin = registeringGroup.admin();</span>
+<span class="nc" id="L56">      userRegistrar.register(admin);</span>
+      // persist the registered group
+    }
+<span class="nc" id="L59">    Result&lt;RegisteringGroup&gt; result = Result.success(registeringGroup);</span>
+<span class="nc" id="L60">    return new ResponseEntity&lt;Result&lt;RegisteringGroup&gt;&gt;(result, HttpStatus.OK);</span>
+  }
+
+  /**
+   * Unregisters the given user by updating the status of the registration in the 
+   * group data store.
+   * 
+   * @param unregisteringGroup  the entity attempting to unregister
+   * @return the result of unregistration
+   * @throws DataStoreException if an invalid set of data was passed in to perform unregistration
+   * (like, say, an already unregistered and inactive group)
+   */
+  @Override
+  @RequestMapping (value = &quot;/group&quot;, method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = &quot;Group registration&quot;, customFailureMarker = &quot;GROUP_UNREGISTRATION_FAILURE&quot;)
+  public @ResponseBody ResponseEntity&lt;Result&lt;RegisteringGroup&gt;&gt; unregister(@RequestBody RegisteringGroup unregisteringGroup) throws DataStoreException {
+<span class="nc" id="L76">    LOGGER.info(&quot;Group attempting to unregister: {}&quot;, unregisteringGroup);</span>
+    // persist the new status of the group
+<span class="nc" id="L78">    Result&lt;RegisteringGroup&gt; result = Result.success(unregisteringGroup);</span>
+<span class="nc" id="L79">    return new ResponseEntity&lt;Result&lt;RegisteringGroup&gt;&gt;(result, HttpStatus.OK);</span>
+  }
+
+  /**
+   * Re-registers the given group by updating the status of the previous registration
+   * in the group data store.
+   * 
+   * @param reregisteringGroup  the group attempting to reregister
+   * @return the result of reregistration
+   * @throws DataStoreException if an invalid set of data was passed in to perform reregistration
+   * (like, say, an already registered and active group)
+   */
+  @Override
+  @RequestMapping (value = &quot;/group&quot;, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ServiceMethod (action = &quot;Group registration&quot;, customFailureMarker = &quot;GROUP_REREGISTRATION_FAILURE&quot;)
+  public @ResponseBody ResponseEntity&lt;Result&lt;RegisteringGroup&gt;&gt; reregister(@RequestBody RegisteringGroup reregisteringGroup) throws DataStoreException {
+<span class="nc" id="L95">    LOGGER.info(&quot;Group attempting to re-register: {}&quot;, reregisteringGroup);</span>
+    // persist the new status of the group
+<span class="nc" id="L97">    Result&lt;RegisteringGroup&gt; result = Result.success(reregisteringGroup);</span>
+<span class="nc" id="L98">    return new ResponseEntity&lt;Result&lt;RegisteringGroup&gt;&gt;(result, HttpStatus.OK);</span>
+  }
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
