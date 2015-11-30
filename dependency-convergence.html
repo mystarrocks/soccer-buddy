@@ -98,8 +98,19 @@
 					</a>
 					<div class="nav-collapse collapse" id="toc-nav-collapse">
 						<ul id="toc" class="nav">
-						<li class="toplevel"><a href="#dependency_convergence" title="Dependency Convergence">Dependency Convergence</a></li>
-						<li class="toplevel"><a href="#dependencies_used_in_this_project" title="Dependencies used in this project">Dependencies used in this project</a></li>
+						<li class="toplevel"><a href="#reactor_dependency_convergence" title="Reactor Dependency Convergence">Reactor Dependency Convergence</a></li>
+						<li class="dropdown">
+							<a href="#dependencies_used_in_modules" title="Dependencies used in modules" class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="#">Dependencies used in modules <b class="caret"></b></a>
+							<ul class="dropdown-menu" role="menu">
+								<!-- Repeat the item, otherwise it is not clickable as the dropdown root -->
+								<li><a href="#dependencies_used_in_modules" title="Dependencies used in modules">Dependencies used in modules</a></li>
+								<li class="divider"></li>
+								<li><a href="#comgoogleprotobufprotobuf-java" title="com.google.protobuf:protobuf-java">com.google.protobuf:protobuf-java</a></li>
+								<li><a href="#commons-iocommons-io" title="commons-io:commons-io">commons-io:commons-io</a></li>
+								<li><a href="#orgcodehausjacksonjackson-core-asl" title="org.codehaus.jackson:jackson-core-asl">org.codehaus.jackson:jackson-core-asl</a></li>
+
+							</ul>
+						</li>
 						</ul>
 					</div>
 				</div>
@@ -113,7 +124,7 @@
 			<div class="body-content">
 <div class="section"> 
  <div class="page-header">
-  <h2 id="dependency_convergence"><a name="Dependency_Convergence"></a>Dependency Convergence</h2>
+  <h2 id="reactor_dependency_convergence"><a name="Reactor_Dependency_Convergence"></a>Reactor Dependency Convergence</h2>
  </div> 
  <table border="0" class="bodyTable table table-striped table-hover"> 
   <caption> 
@@ -129,39 +140,45 @@
  <br /> 
  <table border="0" class="bodyTable table table-striped table-hover"> 
   <thead> 
-   <tr class="a"> 
+   <tr class="b"> 
     <th>Ready for release (100 % convergence and no SNAPSHOTS):</th> 
-    <td><i class="icon-ok"></i>&nbsp;<b>Success</b></td> 
+    <td><i class="icon-exclamation-sign"></i>&nbsp;<b>Error</b><br />You do not have 100 % convergence.</td> 
+   </tr> 
+  </thead> 
+  <thead> 
+   <tr class="a"> 
+    <th>Convergence (NOD/NOA):</th> 
+    <td><i class="icon-exclamation-sign"></i>&nbsp;<b>96 %</b></td> 
    </tr> 
   </thead> 
   <thead> 
    <tr class="b"> 
-    <th>Convergence (NOD/NOA):</th> 
-    <td><i class="icon-ok"></i>&nbsp;<b>100 %</b></td> 
-   </tr> 
-  </thead> 
-  <thead> 
-   <tr class="a"> 
     <th>Number of SNAPSHOT artifacts (NOS):</th> 
     <td>0</td> 
    </tr> 
   </thead> 
   <thead> 
-   <tr class="b"> 
+   <tr class="a"> 
     <th>Number of version-conflicting artifacts (NOC):</th> 
-    <td>0</td> 
+    <td>3</td> 
+   </tr> 
+  </thead> 
+  <thead> 
+   <tr class="b"> 
+    <th>Number of unique artifacts (NOA):</th> 
+    <td>117</td> 
    </tr> 
   </thead> 
   <thead> 
    <tr class="a"> 
-    <th>Number of unique artifacts (NOA):</th> 
-    <td>25</td> 
+    <th>Number of dependencies (NOD):</th> 
+    <td>113</td> 
    </tr> 
   </thead> 
   <thead> 
    <tr class="b"> 
-    <th>Number of dependencies (NOD):</th> 
-    <td>25</td> 
+    <th>Number of modules:</th> 
+    <td>4</td> 
    </tr> 
   </thead> 
   <caption> 
@@ -172,7 +189,104 @@
  </table> 
 </div> 
 <div class="section"> 
- <h3 id="dependencies_used_in_this_project"><a name="Dependencies_used_in_this_project"></a>Dependencies used in this project</h3> 
+ <h3 id="dependencies_used_in_modules"><a name="Dependencies_used_in_modules"></a>Dependencies used in modules</h3> 
+ <div class="section"> 
+  <h4 id="comgoogleprotobufprotobuf-java"><a name="com.google.protobuf:protobuf-java"></a>com.google.protobuf:protobuf-java</h4> 
+  <table border="0" class="bodyTable table table-striped table-hover"> 
+   <tbody> 
+    <tr class="a"> 
+     <td><i class="icon-exclamation-sign"></i></td> 
+     <td> 
+      <table border="0" class="bodyTable table table-striped table-hover"> 
+       <tbody> 
+        <tr class="b"> 
+         <td width="25%">2.4.1</td> 
+         <td> 
+          <ol style="list-style-type: decimal"> 
+           <li>com.soccerbuddy:soccerbuddy-data:jar:1.0-SNAPSHOT<br />\-&nbsp;com.google.apis:google-api-services-datastore-protobuf:jar:v1beta2-rev1-3.0.2:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.http-client:google-http-client-protobuf:jar:1.15.0-rc:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;(com.google.protobuf:protobuf-java:jar:2.4.1:compile - omitted for conflict with 2.5.0)<br /></li> 
+           <br /> 
+           <li>com.soccerbuddy:soccerbuddy-service:jar:1.0-SNAPSHOT<br />\-&nbsp;com.soccerbuddy:soccerbuddy-data:jar:1.0-SNAPSHOT:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.apis:google-api-services-datastore-protobuf:jar:v1beta2-rev1-3.0.2:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.http-client:google-http-client-protobuf:jar:1.15.0-rc:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;(com.google.protobuf:protobuf-java:jar:2.4.1:compile - omitted for conflict with 2.5.0)<br /></li> 
+           <br /> 
+          </ol></td> 
+        </tr> 
+        <tr class="a"> 
+         <td width="25%">2.5.0</td> 
+         <td> 
+          <ol style="list-style-type: decimal"> 
+           <li>com.soccerbuddy:soccerbuddy-data:jar:1.0-SNAPSHOT<br />\-&nbsp;com.google.apis:google-api-services-datastore-protobuf:jar:v1beta2-rev1-3.0.2:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.protobuf:protobuf-java:jar:2.5.0:compile<br /></li> 
+           <br /> 
+           <li>com.soccerbuddy:soccerbuddy-service:jar:1.0-SNAPSHOT<br />\-&nbsp;com.soccerbuddy:soccerbuddy-data:jar:1.0-SNAPSHOT:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.apis:google-api-services-datastore-protobuf:jar:v1beta2-rev1-3.0.2:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.protobuf:protobuf-java:jar:2.5.0:compile<br /></li> 
+           <br /> 
+          </ol></td> 
+        </tr> 
+       </tbody> 
+      </table></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+ </div> 
+ <div class="section"> 
+  <h4 id="commons-iocommons-io"><a name="commons-io:commons-io"></a>commons-io:commons-io</h4> 
+  <table border="0" class="bodyTable table table-striped table-hover"> 
+   <tbody> 
+    <tr class="b"> 
+     <td><i class="icon-exclamation-sign"></i></td> 
+     <td> 
+      <table border="0" class="bodyTable table table-striped table-hover"> 
+       <tbody> 
+        <tr class="a"> 
+         <td width="25%">2.1</td> 
+         <td> 
+          <ol style="list-style-type: decimal"> 
+           <li>com.soccerbuddy:soccerbuddy-service:jar:1.0-SNAPSHOT<br />\-&nbsp;org.springframework.boot:spring-boot-starter-data-solr:jar:1.2.7.RELEASE:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;org.apache.solr:solr-solrj:jar:4.7.2:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;(commons-io:commons-io:jar:2.1:compile - omitted for conflict with 2.4)<br /></li> 
+           <br /> 
+          </ol></td> 
+        </tr> 
+        <tr class="b"> 
+         <td width="25%">2.4</td> 
+         <td> 
+          <ol style="list-style-type: decimal"> 
+           <li>com.soccerbuddy:soccerbuddy-service:jar:1.0-SNAPSHOT<br />\-&nbsp;org.springframework.boot:spring-boot-starter-integration:jar:1.2.7.RELEASE:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;org.springframework.integration:spring-integration-file:jar:4.1.6.RELEASE:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;commons-io:commons-io:jar:2.4:compile<br /></li> 
+           <br /> 
+          </ol></td> 
+        </tr> 
+       </tbody> 
+      </table></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+ </div> 
+ <div class="section"> 
+  <h4 id="orgcodehausjacksonjackson-core-asl"><a name="org.codehaus.jackson:jackson-core-asl"></a>org.codehaus.jackson:jackson-core-asl</h4> 
+  <table border="0" class="bodyTable table table-striped table-hover"> 
+   <tbody> 
+    <tr class="a"> 
+     <td><i class="icon-exclamation-sign"></i></td> 
+     <td> 
+      <table border="0" class="bodyTable table table-striped table-hover"> 
+       <tbody> 
+        <tr class="b"> 
+         <td width="25%">1.9.11</td> 
+         <td> 
+          <ol style="list-style-type: decimal"> 
+           <li>com.soccerbuddy:soccerbuddy-service:jar:1.0-SNAPSHOT<br />\-&nbsp;com.soccerbuddy:soccerbuddy-data:jar:1.0-SNAPSHOT:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.apis:google-api-services-datastore-protobuf:jar:v1beta2-rev1-3.0.2:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;com.google.http-client:google-http-client-jackson:jar:1.15.0-rc:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;(org.codehaus.jackson:jackson-core-asl:jar:1.9.11:compile - omitted for conflict with 1.9.12)<br /></li> 
+           <br /> 
+          </ol></td> 
+        </tr> 
+        <tr class="a"> 
+         <td width="25%">1.9.12</td> 
+         <td> 
+          <ol style="list-style-type: decimal"> 
+           <li>com.soccerbuddy:soccerbuddy-service:jar:1.0-SNAPSHOT<br />\-&nbsp;org.springframework.boot:spring-boot-starter-data-gemfire:jar:1.2.7.RELEASE:compile<br />&nbsp;&nbsp;&nbsp;\-&nbsp;org.springframework.data:spring-data-gemfire:jar:1.5.4.RELEASE:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-&nbsp;org.codehaus.jackson:jackson-mapper-asl:jar:1.9.12:compile<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;\-&nbsp;(org.codehaus.jackson:jackson-core-asl:jar:1.9.12:compile - omitted for conflict with 1.9.11)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\-&nbsp;org.codehaus.jackson:jackson-core-asl:jar:1.9.12:compile<br /></li> 
+           <br /> 
+          </ol></td> 
+        </tr> 
+       </tbody> 
+      </table></td> 
+    </tr> 
+   </tbody> 
+  </table> 
+ </div> 
 </div>
 			</div>
 		</div>
@@ -263,6 +377,9 @@
 							<a href="project-summary.html" title="Project Summary">Project Summary</a>
 						</li>
 							</ul>
+						</li>
+						<li >
+							<a href="project-reports.html" title="Project Reports">Project Reports <i class="icon-chevron-right"></i></a>
 						</li>
 					</ul>
 				</div>
