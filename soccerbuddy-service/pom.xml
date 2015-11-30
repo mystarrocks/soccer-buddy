@@ -14,6 +14,14 @@
 
   <name>soccerbuddy-service</name>
   <description>The RESTful webservice that interacts with database and acts as a data provider for the downstream systems.</description>
+  <url>${site.url}/soccerbuddy-service</url>
+  
+  <distributionManagement>
+    <site>
+      <id>${site.deploy.id}</id>
+      <url>${site.deploy.url}soccerbuddy-service</url>
+    </site>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -118,4 +126,12 @@
       </plugin>
     </plugins>
   </build>
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

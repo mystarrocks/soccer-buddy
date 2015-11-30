@@ -1,4 +1,4 @@
-package com.soccerbuddy.exception;
+package com.soccerbuddy.util;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -8,7 +8,7 @@ import org.slf4j.MarkerFactory;
  * 
  * <p>
  * Also supports obtaining a {@code Slf4j} marker from custom marker 
- * names (see {@link #asSlf4jMarker(String)}.
+ * names (see {@link #asSlf4jMarker(String)}).
  * 
  * @author mystarrocks
  * @since 1.0

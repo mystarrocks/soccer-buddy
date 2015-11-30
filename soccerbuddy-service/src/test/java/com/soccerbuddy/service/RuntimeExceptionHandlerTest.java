@@ -17,7 +17,7 @@ import com.soccerbuddy.exception.ServiceError;
 public class RuntimeExceptionHandlerTest {
   
   /**
-   * Tests the {@link RuntimeExceptionHandler#handleException(Exception)}
+   * Tests the {@link RuntimeExceptionHandler#handleException(RuntimeException)}
    * for a generic uncaught exception.
    */
   @Test

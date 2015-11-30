@@ -13,6 +13,14 @@
 
   <name>soccerbuddy-data</name>
   <description>Manages the connectivity and the ORM with the back-end database components; acts a data access layer for the downstream systems.</description>
+  <url>${site.url}/soccerbuddy-data</url>
+  
+  <distributionManagement>
+    <site>
+      <id>${site.deploy.id}</id>
+      <url>${site.deploy.url}soccerbuddy-data</url>
+    </site>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -35,4 +43,12 @@
       <artifactId>appengine-api-1.0-sdk</artifactId>
     </dependency>
   </dependencies>
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

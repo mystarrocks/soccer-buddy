@@ -1,6 +1,6 @@
 package com.soccerbuddy.service;
 
-import static com.soccerbuddy.exception.LogMarker.VALIDATION_FAILURE;
+import static com.soccerbuddy.util.LogMarker.VALIDATION_FAILURE;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soccerbuddy.exception.LogMarker;
+import com.soccerbuddy.util.LogMarker;
 import com.soccerbuddy.exception.ServiceError;
 import com.soccerbuddy.exception.ServiceError.Type;
 

@@ -1,6 +1,6 @@
 package com.soccerbuddy.service;
 
-import static com.soccerbuddy.exception.LogMarker.TIMES;
+import static com.soccerbuddy.util.LogMarker.TIMES;
 
 import java.util.UUID;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.soccerbuddy.annotation.ServiceMethod;
 import com.soccerbuddy.data.DataStoreException;
-import com.soccerbuddy.exception.LogMarker;
+import com.soccerbuddy.util.LogMarker;
 import com.soccerbuddy.exception.ServiceError;
 import com.soccerbuddy.exception.ServiceError.Type;
 import com.soccerbuddy.model.Resource;

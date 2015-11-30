@@ -10,7 +10,15 @@
   <artifactId>soccerbuddy-model</artifactId>
 
   <name>soccerbuddy-model</name>
-  <description>The collection of all the model classes used by the web service and the data projects.	</description>
+  <description>The collection of all the model classes used by the web service and the data projects.</description>
+  <url>${site.url}/soccerbuddy-model</url>
+  
+  <distributionManagement>
+    <site>
+      <id>${site.deploy.id}</id>
+      <url>${site.deploy.url}soccerbuddy-model</url>
+    </site>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -36,4 +44,12 @@
       </exclusions>
     </dependency>
   </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

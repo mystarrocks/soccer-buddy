@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="soccerbuddy-model"
+  xmlns="http://maven.apache.org/DECORATION/1.3.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+
+  <bannerLeft>
+    <name><![CDATA[
+      <span class="color-highlight">soccer-buddy</span>/soccerbuddy-model
+      ]]>
+    </name>
+  </bannerLeft>
+  
+  <publishDate position="bottom" format="yyyy-MM-dd" />
+  <version position="bottom" />
+  <googleAnalyticsAccountId></googleAnalyticsAccountId>
+
+  <skin>
+    <groupId>lt.velykis.maven.skins</groupId>
+    <artifactId>reflow-maven-skin</artifactId>
+    <version>1.1.1</version>
+  </skin>
+  
+  <custom>
+    <reflowSkin>
+      <shortTitle>Model</shortTitle>
+      <pages>
+        <index project="soccerbuddy-model" combine.self="override">
+          <!-- Override the title -->
+          <titleTemplate>Model</titleTemplate>
+          <breadcrumbs>true</breadcrumbs>
+          <toc>true</toc>
+          <markPageHeader>true</markPageHeader>
+          <sections>
+            <columns>1</columns>
+            <body />
+            <sidebar />
+          </sections>
+        </index>
+        
+        <contribute>
+          <breadcrumbs>false</breadcrumbs>
+        </contribute>
+        <source-repository>
+          <highlightJs>true</highlightJs>
+        </source-repository>
+        <issue-tracking>
+          <highlightJs>true</highlightJs>
+          <toc>true</toc>
+        </issue-tracking>
+        <license>
+          <highlightJs>true</highlightJs>
+          <toc>true</toc>
+        </license>
+        <project-info>
+          <toc>true</toc>
+        </project-info>
+        <github-report>
+          <toc>true</toc>
+        </github-report>
+        <dependencies>
+          <tocTopMax>6</tocTopMax>
+        </dependencies>
+      </pages>
+    </reflowSkin>
+  </custom>
+
+  <body>
+
+    <breadcrumbs>
+      <item name="soccerbuddy-model" href="/index.html" />
+    </breadcrumbs>
+    
+    <menu name="Documentation" inherit="bottom">
+      <item name="JavaDoc" href="apidocs/index.html" />
+    </menu>
+    
+    <menu name="Reports" inherit="bottom">
+      <item name="Unit test report" href="surefire-report.html" />
+    </menu>
+    
+  </body>
+</project>

@@ -15,7 +15,7 @@ import com.soccerbuddy.model.UserRegistrationStatus;
  * the model object type it deals with.
  * 
  * <p>
- * At this time, the only support entity object type is {@link Entity},
+ * At this time, the only supported entity object type is {@link Entity},
  * the default entity type for all the model object types.
  * 
  * @author mystarrocks

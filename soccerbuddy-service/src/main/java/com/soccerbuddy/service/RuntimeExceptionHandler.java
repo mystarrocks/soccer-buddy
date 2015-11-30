@@ -1,6 +1,6 @@
 package com.soccerbuddy.service;
 
-import static com.soccerbuddy.exception.LogMarker.UNKNOWN_ERROR;
+import static com.soccerbuddy.util.LogMarker.UNKNOWN_ERROR;
 
 import org.slf4j.Marker;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soccerbuddy.exception.LogMarker;
+import com.soccerbuddy.util.LogMarker;
 import com.soccerbuddy.exception.ServiceError;
 import com.soccerbuddy.exception.ServiceError.Type;
 
