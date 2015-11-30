@@ -8,21 +8,21 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<title>Web services | soccerbuddy-service</title>
+		<title>soccerbuddy-parent | soccer-buddy</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta http-equiv="content-language" content="en" />
  
 		<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="..//css/docs.css" rel="stylesheet" />
-		<link href="..//css/reflow-skin.css" rel="stylesheet" />
+		<link href=".//css/docs.css" rel="stylesheet" />
+		<link href=".//css/reflow-skin.css" rel="stylesheet" />
 
 		<link href="http://yandex.st/highlightjs/7.5/styles/github.min.css" rel="stylesheet" />
 
-		<link href="..//css/lightbox.css" rel="stylesheet" />
+		<link href=".//css/lightbox.css" rel="stylesheet" />
 
-		<link href="..//css/site.css" rel="stylesheet" />
-		<link href="..//css/print.css" rel="stylesheet" media="print" />
+		<link href=".//css/site.css" rel="stylesheet" />
+		<link href=".//css/print.css" rel="stylesheet" media="print" />
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
@@ -34,7 +34,7 @@
 <link rel="author" href="https://plus.google.com/u/0/110755243539090436271"/>
 	</head>
 
-	<body class="page-project-summary project-soccerbuddy-service" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
+	<body class="page-project-summary project-soccerbuddy-parent" data-spy="scroll" data-offset="60" data-target="#toc-scroll-target">
 
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
@@ -44,40 +44,16 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="../index.html"><span class="color-highlight">soccer-buddy</span></a>
+					<a class="brand" href="index.html"><span class="color-highlight">soccer-buddy</span></a>
 					<div class="nav-collapse collapse" id="top-nav-collapse">
 						<ul class="nav pull-right">
-							<li ><a href="../" title="GitHub project">GitHub project</a></li>
+							<li ><a href="./" title="GitHub project">GitHub project</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Quickie <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li ><a href="../apidocs/index.html" title="JavaDoc (aggregate)">JavaDoc (aggregate)</a></li>
-									<li ><a href="../release-notes.html" title="Release notes">Release notes</a></li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li ><a href="apidocs/index.html" title="JavaDoc">JavaDoc</a></li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li class="dropdown-submenu disabled">
-										<a title="Unit test">Unit test</a>
-										<ul class="dropdown-menu">
-											<li ><a href="jacoco/index.html" title="Coverage">Coverage</a></li>
-											<li ><a href="surefire-report.html" title="Report">Report</a></li>
-										</ul>
-									</li>
-									<li class="dropdown-submenu disabled">
-										<a title="Integration Test">Integration Test</a>
-										<ul class="dropdown-menu">
-											<li ><a href="jacoco-it/index.html" title="Coverage">Coverage</a></li>
-											<li ><a href="failsafe-report.html" title="Report">Report</a></li>
-										</ul>
-									</li>
+									<li ><a href="modules.html" title="Modules">Modules</a></li>
+									<li ><a href="apidocs/index.html" title="JavaDoc (aggregate)">JavaDoc (aggregate)</a></li>
+									<li ><a href="release-notes.html" title="Release notes">Release notes</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -96,7 +72,7 @@
 		<div class="row" id="banner">
 			<div class="span12">
 				<div class="pull-left">
-					<div id="bannerLeft"><h1><span class="color-highlight">soccer-buddy</span>/soccerbuddy-service</h1></div>
+					<a href="index.html" id="bannerLeft"><h1><span class="color-highlight">soccer-buddy</span></h1></a>
 					<p class="lead">Play your heart out!</p>
 				</div>
 				<div class="pull-right">
@@ -106,11 +82,9 @@
 	</div>
 		<div>
 			<ul class="breadcrumb">
-				<li><a href="../index.html" title="soccer-buddy">soccer-buddy</a></li>
+				<li><a href="index.html" title="soccer-buddy">soccer-buddy</a></li>
 				<li class="divider">/</li>
-				<li><a href="index.html" title="soccerbuddy-service">soccerbuddy-service</a></li>
-				<li class="divider">/</li>
-				<li>Web services</li>
+				<li>soccerbuddy-parent</li>
 			</ul>
 		</div>
 		<hr class="toc-separator" />
@@ -157,15 +131,15 @@
    <tbody> 
     <tr class="b"> 
      <td>Name</td> 
-     <td>soccerbuddy-service</td> 
+     <td>soccerbuddy-parent</td> 
     </tr> 
     <tr class="a"> 
      <td>Description</td> 
-     <td>The RESTful webservice that interacts with database and acts as a data provider for the downstream systems.</td> 
+     <td>The parent POM project that all the soccerbuddy components should inherit from.</td> 
     </tr> 
     <tr class="b"> 
      <td>Homepage</td> 
-     <td><a class="externalLink" href="https://github.com/mystarrocks/soccer-buddy/soccerbuddy-service">https://github.com/mystarrocks/soccer-buddy/soccerbuddy-service</a></td> 
+     <td><a class="externalLink" href="https://github.com/mystarrocks/soccer-buddy">https://github.com/mystarrocks/soccer-buddy</a></td> 
     </tr> 
    </tbody> 
   </table> 
@@ -209,7 +183,7 @@
     </tr> 
     <tr class="a"> 
      <td>ArtifactId</td> 
-     <td>soccerbuddy-service</td> 
+     <td>soccerbuddy-parent</td> 
     </tr> 
     <tr class="b"> 
      <td>Version</td> 
@@ -217,11 +191,7 @@
     </tr> 
     <tr class="a"> 
      <td>Type</td> 
-     <td>jar</td> 
-    </tr> 
-    <tr class="b"> 
-     <td>Java Version</td> 
-     <td>1.8</td> 
+     <td>pom</td> 
     </tr> 
    </tbody> 
   </table> 
@@ -243,13 +213,13 @@
 					<ul class="nav nav-list">
 						<li class="nav-header">Main</li>
 						<li >
-							<a href="../" title="Home">Home</a>
+							<a href="./" title="Home">Home</a>
 						</li>
 						<li >
-							<a href="../" title="GitHub project">GitHub project</a>
+							<a href="./" title="GitHub project">GitHub project</a>
 						</li>
 						<li >
-							<a href="../release-notes.html" title="Release notes">Release notes</a>
+							<a href="release-notes.html" title="Release notes">Release notes</a>
 						</li>
 					</ul>
 				</div>
@@ -257,13 +227,13 @@
 					<ul class="nav nav-list">
 						<li class="nav-header">Contribute</li>
 						<li >
-							<a href="../contribute.html" title="Contribute">Contribute</a>
+							<a href="contribute.html" title="Contribute">Contribute</a>
 						</li>
 						<li >
-							<a href="../issues/" title="Issues">Issues</a>
+							<a href="issues/" title="Issues">Issues</a>
 						</li>
 						<li >
-							<a href="../" title="Fork on GitHub">Fork on GitHub</a>
+							<a href="./" title="Fork on GitHub">Fork on GitHub</a>
 						</li>
 					</ul>
 				</div>
@@ -275,6 +245,9 @@
 							<ul class="nav nav-list">
 						<li >
 							<a href="dependencies.html" title="Dependencies">Dependencies</a>
+						</li>
+						<li >
+							<a href="dependency-convergence.html" title="Dependency Convergence">Dependency Convergence</a>
 						</li>
 						<li >
 							<a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
@@ -295,6 +268,9 @@
 							<a href="license.html" title="Project License">Project License</a>
 						</li>
 						<li >
+							<a href="modules.html" title="Project Modules">Project Modules</a>
+						</li>
+						<li >
 							<a href="plugin-management.html" title="Plugin Management">Plugin Management</a>
 						</li>
 						<li >
@@ -311,17 +287,10 @@
 						</li>
 							</ul>
 						</li>
-						<li >
-							<a href="project-reports.html" title="Project Reports">Project Reports <i class="icon-chevron-right"></i></a>
-						</li>
 					</ul>
 				</div>
 				<div class="span3 bottom-nav">
 					<ul class="nav nav-list">
-						<li class="nav-header">Documentation</li>
-						<li >
-							<a href="apidocs/index.html" title="JavaDoc">JavaDoc</a>
-						</li>
 					</ul>
 				</div>
 				<div class="span3 bottom-description">
@@ -350,11 +319,11 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-	<script src="..//js/lightbox.min.js"></script>
-	<script src="..//js/reflow-scroll.js"></script>
+	<script src=".//js/lightbox.min.js"></script>
+	<script src=".//js/reflow-scroll.js"></script>
 	<script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
 
-	<script src="..//js/reflow-skin.js"></script>
+	<script src=".//js/reflow-skin.js"></script>
 
 	</body>
 </html>
