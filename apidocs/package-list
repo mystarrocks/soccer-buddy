@@ -1,8 +1,4 @@
 com.soccerbuddy.annotation
-com.soccerbuddy.data
 com.soccerbuddy.exception
 com.soccerbuddy.model
-com.soccerbuddy.service
-com.soccerbuddy.service.profile
-com.soccerbuddy.service.registration
 com.soccerbuddy.util
